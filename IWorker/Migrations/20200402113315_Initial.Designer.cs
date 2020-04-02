@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IWorker.Migrations
 {
     [DbContext(typeof(IWorkerContext))]
-    [Migration("20200402074232_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20200402113315_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -22,8 +22,13 @@ namespace IWorker.Migrations
 
             modelBuilder.Entity("IWorker.Models.Plan", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Date")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Hours")
                         .HasColumnType("nvarchar(max)");
@@ -61,11 +66,17 @@ namespace IWorker.Migrations
                     b.Property<string>("Hours")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Sector")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long>("UserID")
-                        .HasColumnType("bigint");
+                    b.Property<string>("Surname")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserID")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("WorkName")
                         .HasColumnType("nvarchar(max)");

@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace IWorker.Models
+namespace IWorker.Dto
 {
-    public class Raport
+    public class NewRaportDto
     {
-        public long Id { get; set; }
         public string UserID { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
@@ -17,5 +16,6 @@ namespace IWorker.Models
         public string Hours { get; set; }
         public string Date { get; set; }
         public string Chests { get; set; }
-    }
+
+    }                                     
 }

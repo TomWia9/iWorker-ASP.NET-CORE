@@ -2,7 +2,7 @@
 
 namespace IWorker.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -10,8 +10,10 @@ namespace IWorker.Migrations
                 name: "Plans",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     UserID = table.Column<string>(nullable: true),
+                    Date = table.Column<string>(nullable: true),
                     WorkName = table.Column<string>(nullable: true),
                     Sector = table.Column<string>(nullable: true),
                     Hours = table.Column<string>(nullable: true)
@@ -27,7 +29,9 @@ namespace IWorker.Migrations
                 {
                     Id = table.Column<long>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserID = table.Column<long>(nullable: false),
+                    UserID = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(nullable: true),
+                    Surname = table.Column<string>(nullable: true),
                     WorkName = table.Column<string>(nullable: true),
                     Sector = table.Column<string>(nullable: true),
                     Amount = table.Column<string>(nullable: true),
