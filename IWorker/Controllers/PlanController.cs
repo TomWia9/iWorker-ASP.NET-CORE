@@ -29,6 +29,12 @@ namespace IWorker.Controllers
             return planService.Get(userID, date);
         }
 
+        [HttpPost]
+        public void Create(PlanDetailsDto plan)
+        {
+            planService.CreatePlan(plan);
+        }
+
 
     }
 }

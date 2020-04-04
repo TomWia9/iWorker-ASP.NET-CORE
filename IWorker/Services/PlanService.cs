@@ -23,10 +23,28 @@ namespace IWorker.Services
 
             return new PlanDetailsDto
             {
+                UserID = plan.UserID,
                 WorkName = plan.WorkName,
                 Sector = plan.Sector,
                 Hours = plan.Hours,
+                Date = plan.Date
             };
+        }
+
+        public void CreatePlan(PlanDetailsDto plan)
+        {
+            var newPlan = new Plan
+            {
+                UserID = plan.UserID,
+                WorkName = plan.WorkName,
+                Sector = plan.Sector,
+                Hours = plan.Hours,
+                Date = plan.Date,
+
+            };
+
+            _context.Plans.Add(newPlan);
+            _context.SaveChanges();
         }
 
     }

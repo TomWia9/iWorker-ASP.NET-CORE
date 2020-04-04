@@ -22,7 +22,7 @@ namespace IWorker.Models
         [MaxLength(50)]
         public string Sector { get; set; }
         [Required]
-        [MaxLength(2)]
+        [MaxLength(15)]
         public string Hours { get; set; }
     }
 }

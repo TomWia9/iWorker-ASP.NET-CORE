@@ -15,7 +15,7 @@ namespace IWorker.Services
         {
             _context = context;
         }
-
+        
         public long CreateRaport(RaportItemDto raport)
         {
             var newRaport = new Raport
