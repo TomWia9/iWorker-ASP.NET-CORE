@@ -24,9 +24,21 @@ namespace IWorker.Controllers
         }
 
         [HttpPost]
-        public long Create(NewRaportDto raport)
+        public long Create(RaportItemDto raport)
         {
             return raportService.CreateRaport(raport);
+        }
+
+        [HttpGet("{userID}")]
+        public IEnumerable<RaportListDto> GetRaportsList(string userID)
+        {
+            return raportService.GetRaportsList(userID);
+        }
+
+        [HttpGet("{userID}/{id}")]
+        public RaportItemDto GetRaport(string userID, long id)
+        {
+            return raportService.GetRaport(userID, id);
         }
     }
 }

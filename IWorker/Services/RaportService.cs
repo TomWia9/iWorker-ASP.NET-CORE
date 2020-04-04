@@ -16,7 +16,7 @@ namespace IWorker.Services
             _context = context;
         }
 
-        public long CreateRaport(NewRaportDto raport)
+        public long CreateRaport(RaportItemDto raport)
         {
             var newRaport = new Raport
             {
@@ -36,6 +36,36 @@ namespace IWorker.Services
             _context.SaveChanges();
 
             return newRaport.Id;
+        }
+
+        public IEnumerable<RaportListDto> GetRaportsList(string userID)
+        {
+            return _context.Raports.Where(x => x.UserID == userID).ToList().Select(x => new RaportListDto
+            {
+                ID = x.Id, //id raportu, nie usera
+                WorkName = x.WorkName,
+                Date = x.Date,
+
+            }) ;
+        }
+
+        public RaportItemDto GetRaport(string userID, long id)
+        {
+            var raport = _context.Raports.Where(x => x.UserID == userID && x.Id == id).FirstOrDefault();
+
+            return new RaportItemDto
+            {
+                UserID = raport.UserID,
+                Name = raport.Name,
+                Surname = raport.Surname,
+                WorkName = raport.WorkName,
+                Sector = raport.Sector,
+                Amount = raport.Amount,
+                Hours = raport.Hours,
+                Date = raport.Date,
+                Chests = raport.Chests
+            };
+
         }
     }
 }

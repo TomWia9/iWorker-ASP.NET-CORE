@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace IWorker.Migrations
 {
@@ -13,7 +14,7 @@ namespace IWorker.Migrations
                     Id = table.Column<long>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserID = table.Column<string>(nullable: true),
-                    Date = table.Column<string>(nullable: true),
+                    Date = table.Column<DateTime>(nullable: false),
                     WorkName = table.Column<string>(nullable: true),
                     Sector = table.Column<string>(nullable: true),
                     Hours = table.Column<string>(nullable: true)
@@ -36,7 +37,7 @@ namespace IWorker.Migrations
                     Sector = table.Column<string>(nullable: true),
                     Amount = table.Column<string>(nullable: true),
                     Hours = table.Column<string>(nullable: true),
-                    Date = table.Column<string>(nullable: true),
+                    Date = table.Column<DateTime>(nullable: false),
                     Chests = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
