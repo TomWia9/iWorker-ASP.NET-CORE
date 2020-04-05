@@ -14,7 +14,9 @@ namespace IWorker.Models
         public string UserID { get; set; }
         [Required]
         [MaxLength(200)]
-        public DateTime Date { get; set; }
+        [DisplayFormat(DataFormatString = "{d/MM/yyyy}", ApplyFormatInEditMode = true)]
+        [DataType(DataType.Date)]
+        public string Date { get; set; }
         [Required]
         [MaxLength(50)]
         public string WorkName { get; set; }

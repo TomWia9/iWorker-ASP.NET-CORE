@@ -1,9 +1,8 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace IWorker.Migrations
 {
-    public partial class Initial : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,11 +12,11 @@ namespace IWorker.Migrations
                 {
                     Id = table.Column<long>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserID = table.Column<string>(nullable: true),
-                    Date = table.Column<DateTime>(nullable: false),
-                    WorkName = table.Column<string>(nullable: true),
-                    Sector = table.Column<string>(nullable: true),
-                    Hours = table.Column<string>(nullable: true)
+                    UserID = table.Column<string>(maxLength: 10, nullable: false),
+                    Date = table.Column<string>(maxLength: 200, nullable: false),
+                    WorkName = table.Column<string>(maxLength: 50, nullable: false),
+                    Sector = table.Column<string>(maxLength: 50, nullable: false),
+                    Hours = table.Column<string>(maxLength: 15, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -30,15 +29,15 @@ namespace IWorker.Migrations
                 {
                     Id = table.Column<long>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserID = table.Column<string>(nullable: true),
-                    Name = table.Column<string>(nullable: true),
-                    Surname = table.Column<string>(nullable: true),
-                    WorkName = table.Column<string>(nullable: true),
-                    Sector = table.Column<string>(nullable: true),
-                    Amount = table.Column<string>(nullable: true),
-                    Hours = table.Column<string>(nullable: true),
-                    Date = table.Column<DateTime>(nullable: false),
-                    Chests = table.Column<string>(nullable: true)
+                    UserID = table.Column<string>(maxLength: 10, nullable: false),
+                    Name = table.Column<string>(maxLength: 50, nullable: false),
+                    Surname = table.Column<string>(maxLength: 50, nullable: false),
+                    WorkName = table.Column<string>(maxLength: 50, nullable: false),
+                    Sector = table.Column<string>(maxLength: 10, nullable: false),
+                    Amount = table.Column<string>(maxLength: 5, nullable: false),
+                    Hours = table.Column<string>(maxLength: 2, nullable: false),
+                    Date = table.Column<string>(maxLength: 200, nullable: false),
+                    Chests = table.Column<string>(maxLength: 10, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -51,10 +50,10 @@ namespace IWorker.Migrations
                 {
                     Id = table.Column<long>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<string>(nullable: true),
-                    Password = table.Column<string>(nullable: true),
-                    Name = table.Column<string>(nullable: true),
-                    Surname = table.Column<string>(nullable: true)
+                    UserId = table.Column<string>(maxLength: 10, nullable: false),
+                    Password = table.Column<string>(maxLength: 50, nullable: false),
+                    Name = table.Column<string>(maxLength: 50, nullable: false),
+                    Surname = table.Column<string>(maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {

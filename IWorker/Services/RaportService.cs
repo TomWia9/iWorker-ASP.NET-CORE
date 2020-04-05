@@ -51,7 +51,7 @@ namespace IWorker.Services
 
         public RaportItemDto GetRaport(string userID, long id)
         {
-            var raport = _context.Raports.Where(x => x.UserID == userID && x.Id == id).FirstOrDefault();
+            var raport = _context.Raports.Where(x => x.UserID == userID && x.Id == id).SingleOrDefault();
 
             return new RaportItemDto
             {

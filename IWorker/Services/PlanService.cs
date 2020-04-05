@@ -17,8 +17,11 @@ namespace IWorker.Services
             _context = context;
         }
 
-        public PlanDetailsDto Get(string userID, DateTime date)
+        public PlanDetailsDto Get(string userID, string date)
         {
+            if (date.Length == 9) //if it is in d/MM/yyyy format, change to dd/MM/yyyy
+                date = "0" + date;
+           
             var plan = _context.Plans.Where(x=> x.UserID == userID && x.Date == date).SingleOrDefault();
 
             return new PlanDetailsDto

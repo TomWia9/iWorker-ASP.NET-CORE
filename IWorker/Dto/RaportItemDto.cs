@@ -14,7 +14,7 @@ namespace IWorker.Dto
         public string Sector { get; set; }
         public string Amount { get; set; }
         public string Hours { get; set; }
-        public DateTime Date { get; set; }
+        public string Date { get; set; }
         public string Chests { get; set; }
 
     }                                     

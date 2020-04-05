@@ -24,7 +24,7 @@ namespace IWorker.Controllers
         }
 
         [HttpGet("{userID}/{date}")]
-        public PlanDetailsDto Get(string userID, DateTime date)
+        public PlanDetailsDto Get(string userID, string date)
         {
             return planService.Get(userID, date);
         }
