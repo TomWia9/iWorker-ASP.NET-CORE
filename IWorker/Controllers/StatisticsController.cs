@@ -23,10 +23,12 @@ namespace IWorker.Controllers
             statisticsService = new StatisticsService(context);
         }
 
-        //public List<double> GetChartData(string userID, string peroid, int chartID)
-        //{
-        //    return statisticsService.GetChartData(userID, peroid, chartID);
-        //}
+        [HttpGet("getChartData/{userID}/{peroid}/{chartID}")]
+
+        public List<double> getchartdata(string userid, string peroid, int chartid)
+        {
+            return statisticsService.GetChartData(userid, peroid, chartid);
+        }
 
         [HttpGet("getChartLabels/{userID}/{peroid}/{chartID}")]
         public List<string> GetChartLabels(string userID, string peroid, int chartID)
