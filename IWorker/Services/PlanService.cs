@@ -1,6 +1,5 @@
 ﻿using IWorker.Dto;
 using IWorker.Models;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,10 +18,13 @@ namespace IWorker.Services
 
         public PlanDetailsDto Get(string userID, string date)
         {
-            if (date.Length == 9) //if it is in d/MM/yyyy format, change to dd/MM/yyyy
-                date = "0" + date;
            
-            var plan = _context.Plans.Where(x=> x.UserID == userID && x.Date == date).SingleOrDefault();
+            var plan = _context.Plans.Where(x => x.UserID == userID && x.Date.Date == DateTime.Parse(date).Date).SingleOrDefault();
+
+            if(plan == null)
+            {
+                return null;
+            }
 
             return new PlanDetailsDto
             {
@@ -30,7 +32,7 @@ namespace IWorker.Services
                 WorkName = plan.WorkName,
                 Sector = plan.Sector,
                 Hours = plan.Hours,
-                Date = plan.Date
+                Date = plan.Date.ToShortDateString()
             };
         }
 
@@ -42,7 +44,7 @@ namespace IWorker.Services
                 WorkName = plan.WorkName,
                 Sector = plan.Sector,
                 Hours = plan.Hours,
-                Date = plan.Date,
+                Date = DateTime.Parse(plan.Date), 
 
             };
 

@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace IWorker.Migrations
 {
@@ -13,7 +14,7 @@ namespace IWorker.Migrations
                     Id = table.Column<long>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserID = table.Column<string>(maxLength: 10, nullable: false),
-                    Date = table.Column<string>(maxLength: 200, nullable: false),
+                    Date = table.Column<DateTime>(maxLength: 200, nullable: false),
                     WorkName = table.Column<string>(maxLength: 50, nullable: false),
                     Sector = table.Column<string>(maxLength: 50, nullable: false),
                     Hours = table.Column<string>(maxLength: 15, nullable: false)
@@ -34,9 +35,9 @@ namespace IWorker.Migrations
                     Surname = table.Column<string>(maxLength: 50, nullable: false),
                     WorkName = table.Column<string>(maxLength: 50, nullable: false),
                     Sector = table.Column<string>(maxLength: 10, nullable: false),
-                    Amount = table.Column<string>(maxLength: 5, nullable: false),
-                    Hours = table.Column<string>(maxLength: 2, nullable: false),
-                    Date = table.Column<string>(maxLength: 200, nullable: false),
+                    Amount = table.Column<double>(maxLength: 10, nullable: false),
+                    Hours = table.Column<double>(maxLength: 2, nullable: false),
+                    Date = table.Column<DateTime>(maxLength: 200, nullable: false),
                     Chests = table.Column<string>(maxLength: 10, nullable: false)
                 },
                 constraints: table =>

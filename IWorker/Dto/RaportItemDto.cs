@@ -12,8 +12,8 @@ namespace IWorker.Dto
         public string Surname { get; set; }
         public string WorkName { get; set; }
         public string Sector { get; set; }
-        public string Amount { get; set; }
-        public string Hours { get; set; }
+        public double Amount { get; set; }
+        public double Hours { get; set; }
         public string Date { get; set; }
         public string Chests { get; set; }
 

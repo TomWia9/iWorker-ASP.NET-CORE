@@ -15,8 +15,7 @@ namespace IWorker.Models
         [Required]
         [MaxLength(200)]
         [DisplayFormat(DataFormatString = "{d/MM/yyyy}", ApplyFormatInEditMode = true)]
-        [DataType(DataType.Date)]
-        public string Date { get; set; }
+        public DateTime Date { get; set; }
         [Required]
         [MaxLength(50)]
         public string WorkName { get; set; }

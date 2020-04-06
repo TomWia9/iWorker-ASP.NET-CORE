@@ -27,7 +27,7 @@ namespace IWorker.Services
                Sector = raport.Sector,
                Amount = raport.Amount,
                Hours = raport.Hours,
-               Date = raport.Date,
+               Date = DateTime.Parse(raport.Date),
                Chests = raport.Chests,
 
             };
@@ -44,7 +44,7 @@ namespace IWorker.Services
             {
                 ID = x.Id, //id raportu, nie usera
                 WorkName = x.WorkName,
-                Date = x.Date,
+                Date = x.Date.ToShortDateString(),
 
             }) ;
         }
@@ -62,7 +62,7 @@ namespace IWorker.Services
                 Sector = raport.Sector,
                 Amount = raport.Amount,
                 Hours = raport.Hours,
-                Date = raport.Date,
+                Date = raport.Date.ToShortDateString(),
                 Chests = raport.Chests
             };
 
