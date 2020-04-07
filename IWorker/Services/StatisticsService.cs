@@ -17,113 +17,73 @@ namespace IWorker.Services
             _context = context;
         }
 
-        public List<double> GetChartData(string userID, string peroid, int chartID)
+        public List<double> GetChartData(string userID, int peroid, int chartID)
         {
-            List<double> data = new List<double>(); //maliny - 1, truskawki - 2, borowki - 3, jerzyny - 4
+            List<double> data = new List<double>(); 
+          
 
-            if(chartID == 1)
+            if (chartID == 1)
             {
+                
                 //here will be ranking
-                data.Add(31);
-                data.Add(30);
-                data.Add(29);
-                data.Add(28);
-                data.Add(27);
-                data.Add(26);
-                data.Add(25);
+               data.Add(31);
+               data.Add(66);
+               data.Add(12);
+               data.Add(22);
+               data.Add(9);
+               data.Add(8);
+               data.Add(50);
 
             }
 
-            if(chartID == 2)
+            if (chartID == 2)
             {
                 List<string> works = new List<string>{"Maliny", "Truskawki", "Borówki", "Jerzyny"};
-
-
-                if (peroid == "month")
-                {
+               
                     for (int i = 0; i < 4; i++)
                     {
-                        data.Add( 
+                            data.Add( 
                             _context.Raports
-                           .Where(x => x.UserID == userID && x.Date.Date >= DateTime.Now.AddMonths(-1).Date && x.WorkName == works.ElementAt(i))
+                           .Where(x => x.UserID == userID && x.Date.Date >= DateTime.Now.AddDays(-peroid).Date && x.WorkName == works.ElementAt(i))
                            .OrderBy(x => x.Date)
                            .Select(x => x.Amount)
                            .Sum()
                        );
                     }
-                    
-                }
-
-                if (peroid == "week")
-                {
-                    for (int i = 0; i < 4; i++)
-                    {
-                        data.Add(
-                           _context.Raports
-                           .Where(x => x.UserID == userID && x.Date.Date >= DateTime.Now.AddDays(-7).Date && x.WorkName == works.ElementAt(i))
-                           .OrderBy(x => x.Date)
-                           .Select(x => x.Amount)
-                           .Sum()
-                       );
-                    }
-                }
             }
 
             if(chartID == 3)
             {
-                if (peroid == "month")
-                {
                     data = _context.Raports
-                   .Where(x => x.UserID == userID && x.Date.Date >= DateTime.Now.AddMonths(-1).Date)
+                   .Where(x => x.UserID == userID && x.Date.Date >= DateTime.Now.AddDays(-peroid).Date)
                    .OrderBy(x => x.Date)
                    .Select(x => x.Hours)
                    .ToList();   
-                }
-
-                if (peroid == "week")
-                {
-                    data = _context.Raports
-                   .Where(x => x.UserID == userID && x.Date.Date >= DateTime.Now.AddDays(-7).Date)
-                   .OrderBy(x => x.Date)
-                   .Select(x => x.Hours)
-                   .ToList();
-                }
             }
 
             return data;
         }
-        public List<string> GetChartLabels(string userID, string peroid, int chartID)
+        public List<string> GetChartLabels(string userID, int peroid, int chartID)
         {
             List<string> labels = new List<string>();
 
             if(chartID == 1 || chartID == 3)
             {
-                if (peroid == "month")
-                {
-                    labels = _context.Raports
-                   .Where(x => x.UserID == userID && x.Date.Date >= DateTime.Now.AddMonths(-1).Date)
+                   labels = _context.Raports
+                   .Where(x => x.UserID == userID && x.Date.Date >= DateTime.Now.AddDays(-peroid).Date)
                    .OrderBy(x => x.Date)
                    .Select(x => x.Date.ToShortDateString())
-                   .ToList();
-                }
-
-                if (peroid == "week")
-                {
-                    labels = _context.Raports
-                   .Where(x => x.UserID == userID && x.Date.Date >= DateTime.Now.AddDays(-7).Date)
-                   .OrderBy(x => x.Date)
-                   .Select(x => x.Date.ToShortDateString())
-                   .ToList();
-                }
+                   .ToList();     
             }
 
             
             if(chartID == 2)
             {
-                labels.Add("Maliny");
-                labels.Add("Truskawki");
+               
+               labels.Add("Maliny");
+               labels.Add("Truskawki");
                 labels.Add("Borówki");
-                labels.Add("Jerzyny");
+               labels.Add("Jerzyny");
             }
 
             return labels;

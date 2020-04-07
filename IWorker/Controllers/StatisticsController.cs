@@ -25,13 +25,13 @@ namespace IWorker.Controllers
 
         [HttpGet("getChartData/{userID}/{peroid}/{chartID}")]
 
-        public List<double> getchartdata(string userid, string peroid, int chartid)
+        public List<double> getchartdata(string userid, int peroid, int chartid)
         {
             return statisticsService.GetChartData(userid, peroid, chartid);
         }
 
         [HttpGet("getChartLabels/{userID}/{peroid}/{chartID}")]
-        public List<string> GetChartLabels(string userID, string peroid, int chartID)
+        public List<string> GetChartLabels(string userID, int peroid, int chartID)
         {
             return statisticsService.GetChartLabels(userID, peroid, chartID);
         }
