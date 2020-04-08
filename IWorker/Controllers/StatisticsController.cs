@@ -36,6 +36,12 @@ namespace IWorker.Controllers
             return statisticsService.GetChartLabels(userID, peroid, chartID);
         }
 
+        [HttpGet("getRanking/{date}")]
+        public IEnumerable<RankingDto> GetRanking(string date)
+        {
+            return statisticsService.GetRanking(date);
+        }
+
 
     }
 }
