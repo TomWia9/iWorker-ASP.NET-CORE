@@ -100,5 +100,20 @@ namespace IWorker.Services
 
             return labels;
         }
+
+        public MainStatisticsDto GetMainStatistics(string userID, string date)
+        {
+            var stats = _context.Raports.Where(x => x.UserID == userID && x.Date.Date == DateTime.Parse(date).Date).SingleOrDefault();
+
+            if (stats == null)
+                return null;
+
+            return new MainStatisticsDto
+            {
+                RankingPosition = GetRanking(date).ToList().FindIndex(x => x.UserID == userID) + 1,
+                Amount = stats.Amount,
+                Hours = stats.Hours
+            };
+        }
     }
 }

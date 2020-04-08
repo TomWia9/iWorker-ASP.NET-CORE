@@ -42,6 +42,12 @@ namespace IWorker.Controllers
             return statisticsService.GetRanking(date);
         }
 
+        [HttpGet("getMainStatistics/{userID}/{date}")]
+        public MainStatisticsDto GetMainStatistics(string userID, string date)
+        {
+            return statisticsService.GetMainStatistics(userID, date);
+        }
+
 
     }
 }
