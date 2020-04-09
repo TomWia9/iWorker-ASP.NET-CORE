@@ -24,7 +24,7 @@ namespace IWorker.Services
                 UserID = x.UserID,
                 Name = x.Name,
                 Surname = x.Surname,
-                Ratio = x.Amount / x.Hours
+                Ratio = Math.Round(x.Amount / x.Hours, 2)
             });
         }
 
@@ -114,6 +114,67 @@ namespace IWorker.Services
                 Amount = stats.Amount,
                 Hours = stats.Hours
             };
+        }
+
+        public DataStatisticsDto GetDataStatistics(string userID, int statsID)
+        {
+            switch (statsID)
+            {
+                case 1: //ranking
+                    string date;
+                    int rankingPosition = 1;
+                    int i = 0;
+                    List<int> positions = new List<int>();
+
+                    while (rankingPosition != 0)
+                    {
+                        i++;
+                        date = DateTime.Now.AddDays(-i).Date.ToShortDateString();
+                        rankingPosition = GetRanking(date).ToList().FindIndex(x => x.UserID == userID) + 1;
+                        if (rankingPosition != 0)
+                            positions.Add(rankingPosition);
+                    }
+
+                    positions.Reverse();
+
+                    return new DataStatisticsDto
+                    {
+                        Min = positions.Min(),
+                        Max = positions.Max(),
+                        Avg = Math.Round(positions.Average(), 2),
+                        AvgWeek = Math.Round(positions.Take(7).Average(), 2),
+                        AvgMonth = Math.Round(positions.Take(30).Average(), 2)
+                    };
+
+                case 2: //amount
+
+                    return new DataStatisticsDto
+                    {
+                        Max = _context.Raports.Where(x => x.UserID == userID).Max(x => x.Amount),
+                        Min = _context.Raports.Where(x => x.UserID == userID).Min(x => x.Amount),
+                        Total = _context.Raports.Where(x => x.UserID == userID).Sum(x => x.Amount),
+                        Avg = Math.Round(_context.Raports.Where(x => x.UserID == userID).Average(x => x.Amount), 2),
+                        AvgWeek = Math.Round(_context.Raports.Where(x => x.UserID == userID && x.Date.Date >= DateTime.Now.AddDays(-7).Date && x.Date.Date < DateTime.Now.Date).Average(x => x.Amount), 2),
+                        AvgMonth = Math.Round(_context.Raports.Where(x => x.UserID == userID && x.Date.Date >= DateTime.Now.AddDays(-30).Date && x.Date.Date < DateTime.Now.Date).Average(x => x.Amount), 2)
+                    };
+
+                case 3: //hours
+
+                    return new DataStatisticsDto
+                    {
+                        Max = _context.Raports.Where(x => x.UserID == userID).Max(x => x.Hours),
+                        Min = _context.Raports.Where(x => x.UserID == userID).Min(x => x.Hours),
+                        Total = _context.Raports.Where(x => x.UserID == userID).Sum(x => x.Hours),
+                        Avg = Math.Round(_context.Raports.Where(x => x.UserID == userID).Average(x => x.Hours), 2),
+                        AvgWeek = Math.Round(_context.Raports.Where(x => x.UserID == userID && x.Date.Date >= DateTime.Now.AddDays(-7).Date && x.Date.Date < DateTime.Now.Date).Average(x => x.Hours), 2),
+                        AvgMonth = Math.Round(_context.Raports.Where(x => x.UserID == userID && x.Date.Date >= DateTime.Now.AddDays(-30).Date && x.Date.Date < DateTime.Now.Date).Average(x => x.Hours), 2)
+                    };
+
+
+                default:
+                    return null;
+            }
+
         }
     }
 }

@@ -48,6 +48,12 @@ namespace IWorker.Controllers
             return statisticsService.GetMainStatistics(userID, date);
         }
 
+        [HttpGet("GetDataStatistics/{userID}/{statsID}")]
+        public DataStatisticsDto GetDataStatistics(string userID, int statsID)
+        {
+            return statisticsService.GetDataStatistics(userID, statsID);
+        }
+
 
     }
 }
