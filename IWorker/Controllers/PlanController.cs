@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using IWorker.Services;
 using IWorker.Dto;
+using Microsoft.AspNetCore.Authorization;
 
 namespace IWorker.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class PlanController : ControllerBase

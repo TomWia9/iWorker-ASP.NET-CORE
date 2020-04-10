@@ -5,11 +5,11 @@ using System.Threading.Tasks;
 
 namespace IWorker.Dto
 {
-    public class UserDto
+    public class RegisterDto
     {
         public string UserID { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
-        public string Token { get; set; }
+        public string Password { get; set; }
     }
 }

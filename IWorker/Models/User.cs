@@ -13,7 +13,6 @@ namespace IWorker.Models
         [MaxLength(10)]
         public string UserId { get; set; }
         [Required]
-        [MaxLength(50)]
         public string Password { get; set; }
         [Required]
         [MaxLength(50)]
