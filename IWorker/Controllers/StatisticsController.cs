@@ -27,13 +27,13 @@ namespace IWorker.Controllers
 
         [HttpGet("getChartData/{userID}/{peroid}/{chartID}")]
 
-        public List<double> getchartdata(string userid, int peroid, int chartid)
+        public List<double> getchartdata(int userid, int peroid, int chartid)
         {
             return statisticsService.GetChartData(userid, peroid, chartid);
         }
 
         [HttpGet("getChartLabels/{userID}/{peroid}/{chartID}")]
-        public List<string> GetChartLabels(string userID, int peroid, int chartID)
+        public List<string> GetChartLabels(int userID, int peroid, int chartID)
         {
             return statisticsService.GetChartLabels(userID, peroid, chartID);
         }
@@ -45,13 +45,13 @@ namespace IWorker.Controllers
         }
 
         [HttpGet("getMainStatistics/{userID}/{date}")]
-        public MainStatisticsDto GetMainStatistics(string userID, string date)
+        public MainStatisticsDto GetMainStatistics(int userID, string date)
         {
             return statisticsService.GetMainStatistics(userID, date);
         }
 
         [HttpGet("GetDataStatistics/{userID}/{statsID}")]
-        public DataStatisticsDto GetDataStatistics(string userID, int statsID)
+        public DataStatisticsDto GetDataStatistics(int userID, int statsID)
         {
             return statisticsService.GetDataStatistics(userID, statsID);
         }

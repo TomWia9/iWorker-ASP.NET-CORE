@@ -11,7 +11,7 @@ namespace IWorker.Models
         public long Id { get; set; }
         [Required]
         [MaxLength(10)]
-        public string UserId { get; set; }
+        public int UserId { get; set; }
         [Required]
         public string Password { get; set; }
         [Required]

@@ -12,25 +12,25 @@ using Microsoft.Extensions.Configuration;
 
 namespace IWorker.Controllers
 {
-    [Authorize] //only the employer can add employees to the system
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    public class RegisterController : ControllerBase
+    public class UsersController : ControllerBase
     {
         private readonly IWorkerContext _context;
         private UserService userService;
         private readonly IConfiguration _config;
 
-        public RegisterController(IWorkerContext context, IConfiguration configuration)
+        public UsersController(IWorkerContext context, IConfiguration configuration)
         {
             _context = context;
             userService = new UserService(_context, configuration);
         }
 
-        [HttpPost]
-        public bool Register(RegisterDto register)
+        [HttpGet("getUsersList")]
+        public IEnumerable<UsersListDto> GetUsersList()
         {
-            return userService.Register(register);
+            return userService.GetUsersLists();
         }
     }
 }

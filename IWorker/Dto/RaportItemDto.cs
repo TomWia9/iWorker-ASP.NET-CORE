@@ -7,7 +7,7 @@ namespace IWorker.Dto
 {
     public class RaportItemDto
     {
-        public string UserID { get; set; }
+        public int UserID { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
         public string WorkName { get; set; }

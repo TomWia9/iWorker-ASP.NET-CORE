@@ -28,7 +28,7 @@ namespace IWorker.Services
             });
         }
 
-        public List<double> GetChartData(string userID, int peroid, int chartID)
+        public List<double> GetChartData(int userID, int peroid, int chartID)
         {
             List<double> data = new List<double>();
 
@@ -75,7 +75,7 @@ namespace IWorker.Services
 
             return data;
         }
-        public List<string> GetChartLabels(string userID, int peroid, int chartID)
+        public List<string> GetChartLabels(int userID, int peroid, int chartID)
         {
             List<string> labels = new List<string>();
 
@@ -101,7 +101,7 @@ namespace IWorker.Services
             return labels;
         }
 
-        public MainStatisticsDto GetMainStatistics(string userID, string date)
+        public MainStatisticsDto GetMainStatistics(int userID, string date)
         {
             var stats = _context.Raports.Where(x => x.UserID == userID && x.Date.Date == DateTime.Parse(date).Date).SingleOrDefault();
 
@@ -116,7 +116,7 @@ namespace IWorker.Services
             };
         }
 
-        public DataStatisticsDto GetDataStatistics(string userID, int statsID)
+        public DataStatisticsDto GetDataStatistics(int userID, int statsID)
         {
             switch (statsID)
             {
@@ -136,6 +136,9 @@ namespace IWorker.Services
                     }
 
                     positions.Reverse();
+
+                    if (positions.Count == 0)
+                        return null;
 
                     return new DataStatisticsDto
                     {

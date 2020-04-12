@@ -38,9 +38,9 @@ namespace IWorker.Services
             return newRaport.Id;
         }
 
-        public IEnumerable<RaportListDto> GetRaportsList(string userID)
+        public IEnumerable<RaportListDto> GetRaportsList(int userID)
         {
-            return _context.Raports.Where(x => x.UserID == userID).ToList().Select(x => new RaportListDto
+            return _context.Raports.Where(x => x.UserID == userID).OrderByDescending(x => x.Date.Date).ToList().Select(x => new RaportListDto
             {
                 ID = x.Id, //id raportu, nie usera
                 WorkName = x.WorkName,
@@ -49,7 +49,7 @@ namespace IWorker.Services
             }) ;
         }
 
-        public RaportItemDto GetRaport(string userID, long id)
+        public RaportItemDto GetRaport(int userID, long id)
         {
             var raport = _context.Raports.Where(x => x.UserID == userID && x.Id == id).SingleOrDefault();
 

@@ -23,7 +23,7 @@ namespace IWorker.Services
             _config = configuration;
         }
 
-        public void Register(RegisterDto register)
+        public bool Register(RegisterDto register)
         {
             var user = new User
             {
@@ -33,8 +33,14 @@ namespace IWorker.Services
                 Password = GetHash(register.Password)
             };
 
-            _context.Users.Add(user);
-            _context.SaveChanges();
+            if(!_context.Users.Any(x => (x.UserId == user.UserId)))
+            {
+                _context.Users.Add(user);
+                _context.SaveChanges();
+                return false;
+            }
+
+            return true;
         }
 
         public UserDto Login(LoginDto login)
@@ -75,7 +81,7 @@ namespace IWorker.Services
             return sb.ToString();
         }
 
-        private string GenerateToken(string userID, string name, string surname)
+        private string GenerateToken(int userID, string name, string surname)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.UTF8.GetBytes(_config.GetValue<string>("Security:SecretKey"));
@@ -84,7 +90,7 @@ namespace IWorker.Services
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                    new Claim(ClaimTypes.NameIdentifier, userID),
+                    new Claim(ClaimTypes.NameIdentifier, userID.ToString()),
                     new Claim(ClaimTypes.Name, name),
                     new Claim(ClaimTypes.Surname, surname),
                 }),
@@ -96,6 +102,16 @@ namespace IWorker.Services
             var token = tokenHandler.CreateToken(tokenDecriptior);
 
             return tokenHandler.WriteToken(token);
+        }
+
+        public IEnumerable<UsersListDto> GetUsersLists()
+        {
+            return _context.Users.Where(x => x.UserId != 0).OrderBy(x => x.UserId).ToList().Select(x => new UsersListDto
+            {
+                UserID = x.UserId, 
+                Name = x.Name,
+                Surname = x.Surname,
+            });
         }
     }
 }

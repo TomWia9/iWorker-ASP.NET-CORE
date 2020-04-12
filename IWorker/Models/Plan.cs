@@ -11,7 +11,7 @@ namespace IWorker.Models
         public long Id{get;set;}
         [Required]
         [MaxLength(10)]
-        public string UserID { get; set; }
+        public int UserID { get; set; }
         [Required]
         [MaxLength(200)]
         [DisplayFormat(DataFormatString = "{d/MM/yyyy}", ApplyFormatInEditMode = true)]

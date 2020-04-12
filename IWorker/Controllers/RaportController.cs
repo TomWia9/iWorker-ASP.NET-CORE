@@ -32,13 +32,13 @@ namespace IWorker.Controllers
         }
 
         [HttpGet("{userID}")]
-        public IEnumerable<RaportListDto> GetRaportsList(string userID)
+        public IEnumerable<RaportListDto> GetRaportsList(int userID)
         {
             return raportService.GetRaportsList(userID);
         }
 
         [HttpGet("{userID}/{id}")]
-        public RaportItemDto GetRaport(string userID, long id)
+        public RaportItemDto GetRaport(int userID, long id)
         {
             return raportService.GetRaport(userID, id);
         }

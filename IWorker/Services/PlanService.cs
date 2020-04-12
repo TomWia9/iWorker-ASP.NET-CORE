@@ -16,7 +16,7 @@ namespace IWorker.Services
             _context = context;
         }
 
-        public PlanDetailsDto Get(string userID, string date)
+        public PlanDetailsDto Get(int userID, string date)
         {
            
             var plan = _context.Plans.Where(x => x.UserID == userID && x.Date.Date == DateTime.Parse(date).Date).SingleOrDefault();
