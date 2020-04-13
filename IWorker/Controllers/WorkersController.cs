@@ -15,22 +15,28 @@ namespace IWorker.Controllers
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    public class UsersController : ControllerBase
+    public class WorkersController : ControllerBase
     {
         private readonly IWorkerContext _context;
-        private UserService userService;
+        private WorkersService userService;
         private readonly IConfiguration _config;
 
-        public UsersController(IWorkerContext context, IConfiguration configuration)
+        public WorkersController(IWorkerContext context, IConfiguration configuration)
         {
             _context = context;
-            userService = new UserService(_context, configuration);
+            userService = new WorkersService(_context, configuration);
         }
 
-        [HttpGet("getUsersList")]
-        public IEnumerable<UsersListDto> GetUsersList()
+        [HttpGet("getWorkersList")]
+        public IEnumerable<UsersListDto> GetWorkersList()
         {
-            return userService.GetUsersLists();
+            return userService.GetWorkersLists();
+        }
+
+        [HttpGet("getWorkersNumber")]
+        public int GetWorkersNumber()
+        {
+            return userService.GetWorkersNumber();
         }
     }
 }

@@ -13,11 +13,11 @@ using System.Threading.Tasks;
 
 namespace IWorker.Services
 {
-    public class UserService
+    public class WorkersService
     {
         private readonly IWorkerContext _context;
         private readonly IConfiguration _config;
-        public UserService(IWorkerContext context, IConfiguration configuration)
+        public WorkersService(IWorkerContext context, IConfiguration configuration)
         {
             _context = context;
             _config = configuration;
@@ -104,7 +104,7 @@ namespace IWorker.Services
             return tokenHandler.WriteToken(token);
         }
 
-        public IEnumerable<UsersListDto> GetUsersLists()
+        public IEnumerable<UsersListDto> GetWorkersLists()
         {
             return _context.Users.Where(x => x.UserId != 0).OrderBy(x => x.UserId).ToList().Select(x => new UsersListDto
             {
@@ -112,6 +112,11 @@ namespace IWorker.Services
                 Name = x.Name,
                 Surname = x.Surname,
             });
+        }
+
+        public int GetWorkersNumber()
+        {
+            return _context.Users.Count() - 1; //because of admin
         }
     }
 }

@@ -16,13 +16,13 @@ namespace IWorker.Controllers
     public class LoginController : ControllerBase
     {
         private readonly IWorkerContext _context;
-        private UserService userService;
+        private WorkersService userService;
         private readonly IConfiguration _config;
 
         public LoginController(IWorkerContext context, IConfiguration configuration)
         {
             _context = context;
-            userService = new UserService(_context, configuration);
+            userService = new WorkersService(_context, configuration);
         }
 
         [HttpPost]

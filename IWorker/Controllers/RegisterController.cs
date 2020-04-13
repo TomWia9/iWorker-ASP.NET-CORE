@@ -18,13 +18,13 @@ namespace IWorker.Controllers
     public class RegisterController : ControllerBase
     {
         private readonly IWorkerContext _context;
-        private UserService userService;
+        private WorkersService userService;
         private readonly IConfiguration _config;
 
         public RegisterController(IWorkerContext context, IConfiguration configuration)
         {
             _context = context;
-            userService = new UserService(_context, configuration);
+            userService = new WorkersService(_context, configuration);
         }
 
         [HttpPost]
