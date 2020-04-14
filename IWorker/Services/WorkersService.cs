@@ -118,5 +118,19 @@ namespace IWorker.Services
         {
             return _context.Users.Count() - 1; //because of admin
         }
+
+        public bool DeleteWorker(int userID)
+        {
+            var worker = _context.Users.SingleOrDefault(x => x.UserId == userID);
+            if(worker != null)
+            {
+                _context.Users.Remove(worker);
+                _context.SaveChanges();
+                return true;
+            }
+
+            return false;
+           
+        }
     }
 }

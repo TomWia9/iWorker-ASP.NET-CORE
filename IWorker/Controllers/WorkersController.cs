@@ -38,5 +38,11 @@ namespace IWorker.Controllers
         {
             return userService.GetWorkersNumber();
         }
+
+        [HttpDelete("deleteWorker/{userID}")]
+        public bool DeleteWorker(int userID)
+        {
+            return userService.DeleteWorker(userID);
+        }
     }
 }
