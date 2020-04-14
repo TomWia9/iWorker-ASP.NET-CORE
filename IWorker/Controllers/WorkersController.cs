@@ -44,5 +44,11 @@ namespace IWorker.Controllers
         {
             return userService.DeleteWorker(userID);
         }
+
+        [HttpPost("editWorker/{userID}")]
+        public bool EditWorker(int userID, UsersListDto newData)
+        {
+            return userService.EditWorker(userID, newData);
+        }
     }
 }

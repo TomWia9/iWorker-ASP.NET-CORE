@@ -132,5 +132,28 @@ namespace IWorker.Services
             return false;
            
         }
+
+        public bool EditWorker(int userID, UsersListDto worker)
+        {
+            if (_context.Users.Any(x => (x.UserId == worker.UserID) && x.UserId != userID)) //jezeli id jest juz zajete ale moze byc to co bylo
+            {
+                return false;
+            }
+
+            var user = new User
+            {
+                UserId = worker.UserID,
+                Name = worker.Name,
+                Surname = worker.Surname,
+                Password = _context.Users.Where(x => x.UserId == userID).SingleOrDefault().Password
+            };
+
+            DeleteWorker(userID);
+            _context.Users.Add(user);
+            _context.SaveChanges();
+
+            return true;
+
+        }
     }
 }
