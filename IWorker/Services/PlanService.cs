@@ -19,7 +19,7 @@ namespace IWorker.Services
         public WorkerPlanDetailsDto Get(int userID, string date)
         {
 
-            var plan = _context.Plans.Where(x => x.UserID == userID && x.Date.Date == DateTime.Parse(date).Date).SingleOrDefault();
+            var plan = _context.Plans.Where(x => x.UserID == userID && x.Date.Date == DateTime.Parse(date).Date).FirstOrDefault();
 
             if (plan == null)
             {
@@ -90,6 +90,74 @@ namespace IWorker.Services
             }
           
         }
+
+        public PlanDetailsDto GetFullPlan(string date)
+        {
+
+            PlanDetailsDto fullPlan = new PlanDetailsDto();
+            
+            var plan = _context.Plans.Where(x => x.Date.Date == DateTime.Parse(date).Date).ToList();
+
+            if (!plan.Any())
+            {
+                return null;
+            }
+
+            fullPlan.Date = plan[0].Date.ToString();
+            fullPlan.Hours = plan[0].Hours;
+
+            foreach (var worker in plan)
+            {
+                UsersListDto user = new UsersListDto();
+                user.UserID = worker.UserID;
+                var nameAndSurname = _context.Users.Where(x => x.UserId == worker.UserID).FirstOrDefault();
+                user.Name = nameAndSurname.Name;
+                user.Surname = nameAndSurname.Surname;
+
+                switch (worker.Sector)
+                {
+                    case "A1":
+                        {
+                            fullPlan.A1.Add(user);
+                            break;
+                        }
+
+                    case "B12":
+                        {
+                            fullPlan.B12.Add(user);
+                            break;
+                        }
+
+                    case "EZ":
+                        {
+                            fullPlan.EZ.Add(user);
+                            break;
+                        }
+
+                    case "ES":
+                        {
+                            fullPlan.ES.Add(user);
+                            break;
+                        }
+
+                    case "C3":
+                        {
+                            fullPlan.C3.Add(user);
+                            break;
+                        }
+
+                    case "H12":
+                        {
+                            fullPlan.H12.Add(user);
+                            break;
+                        }
+                }
+            }
+
+            return fullPlan;
+
+        }
+
     }
  
 }

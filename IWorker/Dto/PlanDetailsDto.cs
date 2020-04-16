@@ -15,5 +15,15 @@ namespace IWorker.Dto
         public List<UsersListDto> ES { get; set; }
         public List<UsersListDto> C3 { get; set; }
         public List<UsersListDto> H12 { get; set; }
+
+        public PlanDetailsDto()
+        {
+            A1 = new List<UsersListDto>();
+            B12 = new List<UsersListDto>();
+            EZ = new List<UsersListDto>();
+            ES = new List<UsersListDto>();
+            C3 = new List<UsersListDto>();
+            H12 = new List<UsersListDto>();
+        }
     }
 }

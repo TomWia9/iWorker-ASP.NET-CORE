@@ -31,6 +31,12 @@ namespace IWorker.Controllers
             return planService.Get(userID, date);
         }
 
+        [HttpGet("GetFullPlan/{date}")]
+        public PlanDetailsDto GetFullPlan(string date)
+        {
+            return planService.GetFullPlan(date);
+        }
+
         [HttpPost("newPlan")]
         public bool Create(PlanDetailsDto plan)
         {
