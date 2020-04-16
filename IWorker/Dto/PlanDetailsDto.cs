@@ -7,10 +7,13 @@ namespace IWorker.Dto
 {
     public class PlanDetailsDto
     {
-        public int UserID { get; set; }
-        public string WorkName { get; set; }
-        public string Sector { get; set; }
-        public string Hours { get; set; }
         public string Date { get; set; }
+        public string Hours { get; set; }
+        public List<UsersListDto> A1 { get; set; }
+        public List<UsersListDto> B12 { get; set; }
+        public List<UsersListDto> EZ { get; set; }
+        public List<UsersListDto> ES { get; set; }
+        public List<UsersListDto> C3 { get; set; }
+        public List<UsersListDto> H12 { get; set; }
     }
 }

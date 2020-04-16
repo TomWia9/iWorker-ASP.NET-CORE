@@ -18,8 +18,8 @@ namespace IWorker.Controllers
     public class WorkersController : ControllerBase
     {
         private readonly IWorkerContext _context;
-        private WorkersService userService;
-        private readonly IConfiguration _config;
+        private readonly WorkersService userService;
+
 
         public WorkersController(IWorkerContext context, IConfiguration configuration)
         {

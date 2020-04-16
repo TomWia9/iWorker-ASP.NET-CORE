@@ -6,8 +6,8 @@ using IWorker.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using IWorker.Services;
-using IWorker.Dto;
 using Microsoft.AspNetCore.Authorization;
+using IWorker.Dto;
 
 namespace IWorker.Controllers
 {
@@ -26,15 +26,15 @@ namespace IWorker.Controllers
         }
 
         [HttpGet("{userID}/{date}")]
-        public PlanDetailsDto Get(int userID, string date)
+        public WorkerPlanDetailsDto Get(int userID, string date)
         {
             return planService.Get(userID, date);
         }
 
-        [HttpPost]
-        public void Create(PlanDetailsDto plan)
+        [HttpPost("newPlan")]
+        public bool Create(PlanDetailsDto plan)
         {
-            planService.CreatePlan(plan);
+           return planService.CreatePlan(plan);
         }
 
 
