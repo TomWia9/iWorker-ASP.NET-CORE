@@ -27,7 +27,7 @@ namespace IWorker.Controllers
 
         [HttpGet("getChartData/{userID}/{peroid}/{chartID}")]
 
-        public List<double> getchartdata(int userid, int peroid, int chartid)
+        public List<double> Getchartdata(int userid, int peroid, int chartid)
         {
             return statisticsService.GetChartData(userid, peroid, chartid);
         }
@@ -56,6 +56,23 @@ namespace IWorker.Controllers
             return statisticsService.GetDataStatistics(userID, statsID);
         }
 
+        [HttpGet("getTop3")]
+        public List<RankingDto> GetTop3()
+        {
+            return statisticsService.GetTop3();
+        }
+
+        [HttpGet("getTotalChartData")]
+        public List<double> GetTotalchartdata()
+        {
+            return statisticsService.GetTotalChartData();
+        }
+
+        [HttpGet("getTotalChartLabels")]
+        public List<string> GetTotalChartLabels()
+        {
+            return statisticsService.GetTotalChartLabels();
+        }
 
     }
 }

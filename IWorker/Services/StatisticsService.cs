@@ -28,6 +28,18 @@ namespace IWorker.Services
             });
         }
 
+        public List<RankingDto> GetTop3()
+        {
+            string date = DateTime.Now.AddDays(-1).Date.ToShortDateString(); //yesterday
+            List<RankingDto> ranking = GetRanking(date).ToList();
+            return new List<RankingDto>
+            {
+                ranking.ElementAt(0),
+                ranking.ElementAt(1),
+                ranking.ElementAt(2)
+            };
+        }
+
         public List<double> GetChartData(int userID, int peroid, int chartID)
         {
             List<double> data = new List<double>();
@@ -179,5 +191,28 @@ namespace IWorker.Services
             }
 
         }
+
+        public List<string> GetTotalChartLabels()
+        {
+            return new List<string>
+            {
+                "Maliny",
+                "Truskawki",
+                "Borówki",
+                "Jerzyny"
+            };
+        }
+
+        public List<double> GetTotalChartData()
+        {
+            return new List<double>
+            {
+                _context.Raports.Where(x => x.WorkName == "Maliny").Sum(x => x.Amount),
+                _context.Raports.Where(x => x.WorkName == "Truskawki").Sum(x => x.Amount),
+                _context.Raports.Where(x => x.WorkName == "Borówki").Sum(x => x.Amount),
+                _context.Raports.Where(x => x.WorkName == "Jerzyny").Sum(x => x.Amount),
+            };
+        }
+
     }
 }
