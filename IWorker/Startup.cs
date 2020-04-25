@@ -34,6 +34,7 @@ namespace IWorker
                 options.UseSqlServer(Configuration.GetConnectionString("IWorkerConnection")));
 
             services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson();
 
             var key = Encoding.UTF8.GetBytes(Configuration.GetValue<string>("Security:SecretKey"));
 

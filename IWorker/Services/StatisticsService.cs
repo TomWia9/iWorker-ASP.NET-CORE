@@ -32,6 +32,12 @@ namespace IWorker.Services
         {
             string date = DateTime.Now.AddDays(-1).Date.ToShortDateString(); //yesterday
             List<RankingDto> ranking = GetRanking(date).ToList();
+
+            if (!ranking.Any())
+            {
+                return null;
+            }
+
             return new List<RankingDto>
             {
                 ranking.ElementAt(0),
