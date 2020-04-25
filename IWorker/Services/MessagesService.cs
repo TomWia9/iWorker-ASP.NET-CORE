@@ -82,9 +82,9 @@ namespace IWorker.Services
             return messageList;
         }
 
-        public string GetMessage(int messageID)
+        public MessageItemDto GetMessage(int messageID)
         {
-            return _context.Messages.Where(x => x.Id == messageID).FirstOrDefault().MessageText;
+            return new MessageItemDto { Message = _context.Messages.Where(x => x.Id == messageID).FirstOrDefault().MessageText };
         }
     }
 }

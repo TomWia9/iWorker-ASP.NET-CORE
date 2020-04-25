@@ -44,7 +44,7 @@ namespace IWorker.Controllers
         }
 
         [HttpGet("getMessage/{messageID}")]
-        public string GetMessage(int messageID)
+        public MessageItemDto GetMessage(int messageID)
         {
             return messagesService.GetMessage(messageID);
         }
