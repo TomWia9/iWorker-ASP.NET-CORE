@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace IWorker.Controllers
 {
-   // [Authorize]
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class MessagesController : ControllerBase

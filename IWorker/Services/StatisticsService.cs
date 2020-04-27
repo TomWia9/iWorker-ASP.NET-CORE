@@ -33,7 +33,7 @@ namespace IWorker.Services
             string date = DateTime.Now.AddDays(-1).Date.ToShortDateString(); //yesterday
             List<RankingDto> ranking = GetRanking(date).ToList();
 
-            if (!ranking.Any())
+            if (ranking.Count() < 3)
             {
                 return null;
             }
@@ -209,14 +209,14 @@ namespace IWorker.Services
             };
         }
 
-        public List<double> GetTotalChartData()
+        public List<double> GetTotalChartData(int peroid)
         {
             return new List<double>
             {
-                _context.Raports.Where(x => x.WorkName == "Maliny").Sum(x => x.Amount),
-                _context.Raports.Where(x => x.WorkName == "Truskawki").Sum(x => x.Amount),
-                _context.Raports.Where(x => x.WorkName == "Borówki").Sum(x => x.Amount),
-                _context.Raports.Where(x => x.WorkName == "Jerzyny").Sum(x => x.Amount),
+                _context.Raports.Where(x => x.WorkName == "Maliny" && x.Date.Date >= DateTime.Now.AddDays(-peroid).Date && x.Date.Date < DateTime.Now.Date).Sum(x => x.Amount),
+                _context.Raports.Where(x => x.WorkName == "Truskawki" && x.Date.Date >= DateTime.Now.AddDays(-peroid).Date && x.Date.Date < DateTime.Now.Date).Sum(x => x.Amount),
+                _context.Raports.Where(x => x.WorkName == "Borówki" && x.Date.Date >= DateTime.Now.AddDays(-peroid).Date && x.Date.Date < DateTime.Now.Date).Sum(x => x.Amount),
+                _context.Raports.Where(x => x.WorkName == "Jerzyny" && x.Date.Date >= DateTime.Now.AddDays(-peroid).Date && x.Date.Date < DateTime.Now.Date).Sum(x => x.Amount),
             };
         }
 

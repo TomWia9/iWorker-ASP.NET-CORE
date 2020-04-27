@@ -62,10 +62,10 @@ namespace IWorker.Controllers
             return statisticsService.GetTop3();
         }
 
-        [HttpGet("getTotalChartData")]
-        public List<double> GetTotalchartdata()
+        [HttpGet("getTotalChartData/{peroid}")]
+        public List<double> GetTotalchartdata(int peroid)
         {
-            return statisticsService.GetTotalChartData();
+            return statisticsService.GetTotalChartData(peroid);
         }
 
         [HttpGet("getTotalChartLabels")]
