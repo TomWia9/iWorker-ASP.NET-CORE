@@ -49,9 +49,9 @@ namespace IWorker.Services
             }) ;
         }
 
-        public IEnumerable<AllRaportsDto> GetAllRaportsList()
+        public IEnumerable<AllRaportsDto> GetAllRaportsList(int peroid)
         {
-            return _context.Raports.OrderByDescending(x => x.Date.Date).ToList().Select(x => new AllRaportsDto
+            return _context.Raports.Where(x => x.Date.Date >= DateTime.Now.AddDays(-peroid).Date && x.Date.Date < DateTime.Now.Date).OrderByDescending(x => x.Date.Date).ToList().Select(x => new AllRaportsDto
             {
                 ID = x.Id, //id raportu, nie usera
                 UserID = x.UserID,

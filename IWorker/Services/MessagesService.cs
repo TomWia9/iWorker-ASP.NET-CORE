@@ -79,6 +79,8 @@ namespace IWorker.Services
                 });
             }
 
+            messageList.Reverse();
+
             return messageList;
         }
 
