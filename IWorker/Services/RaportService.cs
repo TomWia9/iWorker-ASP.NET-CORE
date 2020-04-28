@@ -49,6 +49,18 @@ namespace IWorker.Services
             }) ;
         }
 
+        public IEnumerable<AllRaportsDto> GetAllRaportsList()
+        {
+            return _context.Raports.OrderByDescending(x => x.Date.Date).ToList().Select(x => new AllRaportsDto
+            {
+                ID = x.Id, //id raportu, nie usera
+                UserID = x.UserID,
+                WorkName = x.WorkName,
+                Date = x.Date.ToShortDateString(),
+
+            });
+        }
+
         public RaportItemDto GetRaport(int userID, long id)
         {
             var raport = _context.Raports.Where(x => x.UserID == userID && x.Id == id).SingleOrDefault();

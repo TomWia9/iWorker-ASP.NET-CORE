@@ -42,5 +42,11 @@ namespace IWorker.Controllers
         {
             return raportService.GetRaport(userID, id);
         }
+
+        [HttpGet("getAllRaportsList")]
+        public IEnumerable<AllRaportsDto> GetAllRaportsList()
+        {
+            return raportService.GetAllRaportsList();
+        }
     }
 }
