@@ -67,7 +67,7 @@ namespace IWorker.Services
             return null;
         }
 
-        private string GetHash(string password)
+        public string GetHash(string password)
         {
             var algorythm = SHA256.Create();
 
@@ -154,6 +154,23 @@ namespace IWorker.Services
 
             return true;
 
+        }
+        
+        public bool ChangePassword(NewPasswordDto newPassword)
+        {
+            var user = new User
+            {
+                UserId = newPassword.UserID,
+                Name = newPassword.Name,
+                Surname = newPassword.Surname,
+                Password = GetHash(newPassword.Password)
+            };
+
+            DeleteWorker(newPassword.UserID);
+            _context.Users.Add(user);
+            _context.SaveChanges();
+
+            return false;
         }
     }
 }

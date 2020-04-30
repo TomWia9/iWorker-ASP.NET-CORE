@@ -37,10 +37,10 @@ namespace IWorker.Controllers
             return messagesService.SendToUser(message.Message, from, to);
         }
 
-        [HttpGet("getMessageList/{userID}")]
-        public List<MessageDto> GetMessageList(int userID)
+        [HttpGet("getMessageList/{userID}/{peroid}")]
+        public List<MessageDto> GetMessageList(int userID, int peroid)
         {
-            return messagesService.GetMessageList(userID);
+            return messagesService.GetMessageList(userID, peroid);
         }
 
         [HttpGet("getMessage/{messageID}")]

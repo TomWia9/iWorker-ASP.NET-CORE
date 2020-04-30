@@ -56,11 +56,11 @@ namespace IWorker.Services
             return true;
         }
 
-        public List<MessageDto> GetMessageList(int userID)
+        public List<MessageDto> GetMessageList(int userID, int peroid)
         {
             List <MessageDto> messageList= new List<MessageDto>();
 
-            var messages = _context.Messages.Where(x => x.To == userID);
+            var messages = _context.Messages.Where(x => x.To == userID && x.Date.Date >= DateTime.Now.AddDays(-peroid).Date && x.Date.Date <= DateTime.Now.Date);
 
             foreach (var item in messages)
             {

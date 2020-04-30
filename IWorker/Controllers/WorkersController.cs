@@ -50,5 +50,11 @@ namespace IWorker.Controllers
         {
             return userService.EditWorker(userID, newData);
         }
+
+        [HttpPost("changePassword")]
+        public bool ChangePassword(NewPasswordDto newPassword)
+        {
+            return userService.ChangePassword(newPassword);
+        }
     }
 }
