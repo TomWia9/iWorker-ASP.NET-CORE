@@ -18,7 +18,7 @@ namespace IWorker.Controllers
     public class RegisterController : ControllerBase
     {
         private readonly IWorkerContext _context;
-        private WorkersService userService;
+        private readonly WorkersService userService;
 
         public RegisterController(IWorkerContext context, IConfiguration configuration)
         {

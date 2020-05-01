@@ -1,5 +1,6 @@
 ﻿using IWorker.Dto;
 using IWorker.Models;
+using IWorker.Shared;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -30,7 +31,7 @@ namespace IWorker.Services
                 UserId = register.UserID,
                 Name = register.Name,
                 Surname = register.Surname,
-                Password = GetHash(register.Password)
+                Password = Hash.GetHash(register.Password)
             };
 
             if(!_context.Users.Any(x => (x.UserId == user.UserId)))
@@ -45,7 +46,7 @@ namespace IWorker.Services
 
         public UserDto Login(LoginDto login)
         {
-            var hash = GetHash(login.Password);
+            var hash = Hash.GetHash(login.Password);
 
             if (!_context.Users.Any(x => (x.UserId == login.UserID)))
             {
@@ -65,20 +66,6 @@ namespace IWorker.Services
                 };
             }
             return null;
-        }
-
-        public string GetHash(string password)
-        {
-            var algorythm = SHA256.Create();
-
-            StringBuilder sb = new StringBuilder();
-
-            foreach (var item in algorythm.ComputeHash(Encoding.UTF8.GetBytes(password)))
-            {
-                sb.Append(item.ToString("X2"));
-            }
-
-            return sb.ToString();
         }
 
         private string GenerateToken(int userID, string name, string surname)
@@ -163,7 +150,7 @@ namespace IWorker.Services
                 UserId = newPassword.UserID,
                 Name = newPassword.Name,
                 Surname = newPassword.Surname,
-                Password = GetHash(newPassword.Password)
+                Password = Hash.GetHash(newPassword.Password)
             };
 
             DeleteWorker(newPassword.UserID);

@@ -70,6 +70,7 @@ namespace IWorker
                 app.UseDeveloperExceptionPage();
             }
 
+           
             app.UseHttpsRedirection();
 
             app.UseRouting();
