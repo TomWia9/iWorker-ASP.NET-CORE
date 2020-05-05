@@ -29,7 +29,7 @@ namespace IWorker.Services
                     From = 0, //from admin (admin has ID = 0)
                     To = id,
                     MessageText = message,
-                    Date = DateTime.Today,
+                    Date = DateTime.Now,
                 };
 
                 _context.Messages.Add(newMessage);
@@ -47,7 +47,7 @@ namespace IWorker.Services
                 From = from,
                 To = to,
                 MessageText = message,
-                Date = DateTime.Today,
+                Date = DateTime.Now,
             };
 
             _context.Messages.Add(newMessage);
@@ -69,7 +69,7 @@ namespace IWorker.Services
                 messageList.Add(new MessageDto
                 {
                     MessageID = item.Id,
-                    Date = item.Date.ToLongDateString(),
+                    Date = item.Date.ToString(),
                     Worker = new UsersListDto
                     {
                         UserID = user.UserId,

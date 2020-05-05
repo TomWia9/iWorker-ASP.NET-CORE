@@ -20,7 +20,6 @@ namespace IWorker.Models
         public string MessageText { get; set; }
         [Required]
         [MaxLength(100)]
-        [DisplayFormat(DataFormatString = "{d/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime Date { get; set; }
 
     }
