@@ -136,6 +136,9 @@ namespace IWorker.Services
 
         public DataStatisticsDto GetDataStatistics(int userID, int statsID)
         {
+            if (!_context.Raports.Where(x => x.UserID == userID).Any() || !_context.Raports.Where(x => x.UserID == userID && x.Date.Date >= DateTime.Now.AddDays(-7).Date && x.Date.Date < DateTime.Now.Date).Any())
+                return null; //return null when ther's no raports or no raports in previous week
+
             switch (statsID)
             {
                 case 1: //ranking
@@ -155,7 +158,7 @@ namespace IWorker.Services
 
                     positions.Reverse();
 
-                    if (positions.Count == 0)
+                    if (!positions.Any())
                         return null;
 
                     return new DataStatisticsDto
