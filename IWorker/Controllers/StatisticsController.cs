@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace IWorker.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class StatisticsController : ControllerBase
@@ -39,7 +39,7 @@ namespace IWorker.Controllers
         }
 
         [HttpGet("getRanking/{date}")]
-        public IEnumerable<RankingDto> GetRanking(string date)
+        public List<RankingDto> GetRanking(string date)
         {
             return statisticsService.GetRanking(date);
         }

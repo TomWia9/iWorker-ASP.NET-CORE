@@ -17,15 +17,32 @@ namespace IWorker.Services
             _context = context;
         }
 
-        public IEnumerable<RankingDto> GetRanking(string date)
+        public List<RankingDto> GetRanking(string date)
         {
-            return _context.Raports.Where(x => x.Date.Date == DateTime.Parse(date).Date).OrderByDescending(x => x.Amount / x.Hours).Select(x => new RankingDto
+            List<RankingDto> ranking = new List<RankingDto>();
+            int position = 1;
+            double currentRatio = 0;
+
+            foreach (var worker in _context.Raports.Where(x => x.Date.Date == DateTime.Parse(date).Date).OrderByDescending(x => x.Amount / x.Hours))
             {
-                UserID = x.UserID,
-                Name = x.Name,
-                Surname = x.Surname,
-                Ratio = Math.Round(x.Amount / x.Hours, 2)
-            });
+                if(Math.Round(worker.Amount / worker.Hours, 2) < currentRatio)
+                {
+                    position++;
+                }
+
+                currentRatio = Math.Round(worker.Amount / worker.Hours, 2);
+
+                ranking.Add(new RankingDto()
+                {
+                    UserID = worker.UserID,
+                    Name = worker.Name,
+                    Surname = worker.Surname,
+                    Ratio = currentRatio,
+                    Position = position
+                });
+            }
+
+            return ranking;
         }
 
         public List<RankingDto> GetTop3()
@@ -51,22 +68,23 @@ namespace IWorker.Services
             List<double> data = new List<double>();
 
 
-            if (chartID == 1)
+            if (chartID == 1) //ranking
             {
                 string date;
 
                 for (int i = 1; i <= peroid; i++)
                 {
                     date = DateTime.Now.AddDays(-i).Date.ToShortDateString();
-                    int rankingPosition = GetRanking(date).ToList().FindIndex(x => x.UserID == userID) + 1;
-                    if (rankingPosition != 0)
-                        data.Add(rankingPosition);
+
+                    if(GetRanking(date).Find(x => x.UserID == userID) != null)
+                         data.Add(GetRanking(date).Find(x => x.UserID == userID).Position);
+
                 }
 
                 data.Reverse();
             }
 
-            if (chartID == 2)
+            if (chartID == 2) //amount of collected fruits
             {
                 List<string> works = new List<string> { "Maliny", "Truskawki", "Borówki", "Jerzyny" };
 
@@ -82,7 +100,7 @@ namespace IWorker.Services
                 }
             }
 
-            if (chartID == 3)
+            if (chartID == 3) //hours
             {
                 data = _context.Raports
                .Where(x => x.UserID == userID && x.Date.Date >= DateTime.Now.AddDays(-peroid).Date && x.Date.Date < DateTime.Now.Date)
@@ -128,7 +146,7 @@ namespace IWorker.Services
 
             return new MainStatisticsDto
             {
-                RankingPosition = GetRanking(date).ToList().FindIndex(x => x.UserID == userID) + 1,
+                RankingPosition = GetRanking(date).Find(x => x.UserID == userID).Position,
                 Amount = stats.Amount,
                 Hours = stats.Hours
             };
@@ -163,8 +181,8 @@ namespace IWorker.Services
 
                     return new DataStatisticsDto
                     {
-                        Min = positions.Min(),
-                        Max = positions.Max(),
+                        Min = positions.Max(), //because the lower the position, the better
+                        Max = positions.Min(),
                         Avg = Math.Round(positions.Average(), 2),
                         AvgWeek = Math.Round(positions.Take(7).Average(), 2),
                         AvgMonth = Math.Round(positions.Take(30).Average(), 2)
