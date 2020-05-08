@@ -73,6 +73,11 @@ namespace IWorker.Services
 
         public bool CreatePlan(PlanDetailsDto plan)
         {
+            if (_context.Plans.Where(x => x.Date.Date == DateTime.Parse(plan.Date).Date).Any() || DateTime.Parse(plan.Date).Date < DateTime.Now.Date)
+            {
+                return false; //worker cant add 2 plans for same day, also he cant add plan for past days
+            }
+
             try
             {
                 AddPlan(plan.A1, "A1", plan.Hours, plan.Date);
