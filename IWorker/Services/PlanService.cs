@@ -163,6 +163,57 @@ namespace IWorker.Services
 
         }
 
+        public List<PlanDateDto> GetListOfPlanDates()
+        {
+            bool canAdd = true;
+
+            List<PlanDateDto> planDates = new List<PlanDateDto>();
+
+           List<PlanDateDto> allPlanDates =  _context.Plans.Where(x => x.Date >= DateTime.Now.Date).Select(x => new PlanDateDto
+           {
+               Date = x.Date.ToShortDateString()
+           }).ToList();
+
+            foreach (var item in allPlanDates)
+            {
+                canAdd = true;
+
+                foreach (var planDate in planDates)
+                {
+                    if (planDate.Date == item.Date)
+                    {
+                        canAdd = false;
+                    }
+                }
+
+                if (canAdd)
+                {
+                    planDates.Add(item);
+                }
+               
+            }
+
+            return planDates;
+
+        }
+
+        public bool DeletePlan(string date)
+        {
+            var plans = _context.Plans.Where(x => x.Date == DateTime.Parse(date).Date).ToList();
+            if (plans.Any())
+            {
+                foreach (var plan in plans)
+                {
+                    _context.Plans.Remove(plan);
+                }
+               
+                _context.SaveChanges();
+                return false; //error = false
+            }
+
+            return false; //error = true
+        }
+
     }
  
 }

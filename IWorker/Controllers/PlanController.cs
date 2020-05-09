@@ -43,6 +43,18 @@ namespace IWorker.Controllers
            return planService.CreatePlan(plan);
         }
 
+        [HttpGet("getListOfPlanDates")]
+        public List<PlanDateDto> GetListOfPlanDates()
+        {
+            return planService.GetListOfPlanDates();
+        }
+
+        [HttpDelete("deletePlan/{date}")]
+        public bool DeletePlan(string date)
+        {
+            return planService.DeletePlan(date);
+        }
+
 
     }
 }
