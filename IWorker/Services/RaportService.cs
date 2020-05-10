@@ -18,9 +18,16 @@ namespace IWorker.Services
         
         public long CreateRaport(RaportItemDto raport)
         {
-            if(_context.Raports.Where(x => x.UserID == raport.UserID && x.Date.Date == DateTime.Parse(raport.Date).Date).Any() || DateTime.Parse(raport.Date).Date > DateTime.Now.Date)
+            if(DateTime.Parse(raport.Date).Date > DateTime.Now.Date)
             {
-                return -1; //if worker has already add raport for selected date, he can't add few raports for the same day, OR if user is adding raport for tomorrow or later
+                return -1; //if user is adding report for tomorrow or later
+            }
+
+            var currentRaport = _context.Raports.Where(x => x.UserID == raport.UserID && x.Date.Date == DateTime.Parse(raport.Date).Date).SingleOrDefault();
+
+            if (currentRaport != null)
+            {
+                _context.Raports.Remove(currentRaport);
             }
 
             var newRaport = new Raport
