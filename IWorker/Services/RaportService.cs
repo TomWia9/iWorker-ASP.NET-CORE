@@ -18,9 +18,9 @@ namespace IWorker.Services
         
         public long CreateRaport(RaportItemDto raport)
         {
-            if(DateTime.Parse(raport.Date).Date > DateTime.Now.Date)
+            if(DateTime.Parse(raport.Date).Date > DateTime.Now.Date || _context.Raports.Where(x => x.Date.Date == DateTime.Parse(raport.Date).Date).Any())
             {
-                return -1; //if user is adding report for tomorrow or later
+                return -1; 
             }
 
             var currentRaport = _context.Raports.Where(x => x.UserID == raport.UserID && x.Date.Date == DateTime.Parse(raport.Date).Date).SingleOrDefault();
