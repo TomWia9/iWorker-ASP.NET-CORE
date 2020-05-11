@@ -18,6 +18,7 @@ namespace IWorker.Models
         public DbSet<Raport> Raports { get; set; }
         public DbSet<Plan> Plans { get; set; }
         public DbSet<Message> Messages { get; set; }
+        public DbSet<Sector> Sectors { get; set; }
 
     }
 }
