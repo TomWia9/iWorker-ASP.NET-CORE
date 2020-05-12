@@ -7,6 +7,12 @@
   <ItemGroup>
     <Compile Remove="Migrations\20200505163038_removeDateFormatFromMessage.cs" />
     <Compile Remove="Migrations\20200505163038_removeDateFormatFromMessage.Designer.cs" />
+    <Compile Remove="Migrations\20200512135244_changeSectorInRaport.cs" />
+    <Compile Remove="Migrations\20200512135244_changeSectorInRaport.Designer.cs" />
+    <Compile Remove="Migrations\20200512140222_changeSectorInRaport.cs" />
+    <Compile Remove="Migrations\20200512140222_changeSectorInRaport.Designer.cs" />
+    <Compile Remove="Migrations\20200512140625_changeSectorInRaport.cs" />
+    <Compile Remove="Migrations\20200512140625_changeSectorInRaport.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

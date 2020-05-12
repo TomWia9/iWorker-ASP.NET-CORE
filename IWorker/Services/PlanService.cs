@@ -36,31 +36,17 @@ namespace IWorker.Services
             };
         }
 
-        private string GetWorknameFromSector(string sector)
+        private void AddPlan(SectorPlanDto sector, string hours, string date)
         {
-            return sector switch
+            if (sector.Workers.Any())
             {
-                "A1" => "Truskawki",
-                "B12" => "Jerzyny",
-                "EZ" => "Maliny",
-                "ES" => "Maliny",
-                "C3" => "Truskawki",
-                "H12" => "Borówki",
-                _ => null,
-            };
-        }
-
-        private void AddPlan(List<UsersListDto> sector, string sectorName, string hours, string date)
-        {
-            if (sector.Any())
-            {
-                foreach (UsersListDto worker in sector)
+                foreach (UsersListDto worker in sector.Workers)
                 {
                     var newPlan = new Plan
                     {
                         UserID = worker.UserID,
-                        WorkName = GetWorknameFromSector(sectorName),
-                        Sector = sectorName,
+                        WorkName = sector.Sector.WorkName,
+                        Sector = sector.Sector.SectorName,
                         Hours = hours,
                         Date = DateTime.Parse(date),
                     };
@@ -75,17 +61,16 @@ namespace IWorker.Services
         {
             if (_context.Plans.Where(x => x.Date.Date == DateTime.Parse(plan.Date).Date).Any() || DateTime.Parse(plan.Date).Date < DateTime.Now.Date)
             {
-                return false; //worker cant add 2 plans for same day, also he cant add plan for past days
+                return false; //employer cant add 2 plans for same day, also he cant add plan for past days
             }
 
             try
             {
-                AddPlan(plan.A1, "A1", plan.Hours, plan.Date);
-                AddPlan(plan.B12, "B12", plan.Hours, plan.Date);
-                AddPlan(plan.EZ, "EZ", plan.Hours, plan.Date);
-                AddPlan(plan.ES, "ES", plan.Hours, plan.Date);
-                AddPlan(plan.C3, "C3", plan.Hours, plan.Date);
-                AddPlan(plan.H12, "H12", plan.Hours, plan.Date);
+                foreach (SectorPlanDto sector in plan.Sectors)
+                {
+                    AddPlan(sector, plan.Hours, plan.Date);
+                }
+
                 return true;
             }
 
@@ -96,7 +81,7 @@ namespace IWorker.Services
           
         }
 
-        public PlanDetailsDto GetFullPlan(string date)
+        public PlanDetailsDto GetFullPlan(string date) //doesnt work right now
         {
 
             PlanDetailsDto fullPlan = new PlanDetailsDto();
@@ -108,8 +93,8 @@ namespace IWorker.Services
                 return null;
             }
 
-            fullPlan.Date = plan[0].Date.ToString();
-            fullPlan.Hours = plan[0].Hours;
+            fullPlan.Date = plan.ElementAt(0).Date.ToString();
+            fullPlan.Hours = plan.ElementAt(0).Hours;
 
             foreach (var worker in plan)
             {
@@ -119,44 +104,58 @@ namespace IWorker.Services
                 user.Name = nameAndSurname.Name;
                 user.Surname = nameAndSurname.Surname;
 
-                switch (worker.Sector)
-                {
-                    case "A1":
-                        {
-                            fullPlan.A1.Add(user);
-                            break;
-                        }
 
-                    case "B12":
-                        {
-                            fullPlan.B12.Add(user);
-                            break;
-                        }
 
-                    case "EZ":
-                        {
-                            fullPlan.EZ.Add(user);
-                            break;
-                        }
+                //fullPlan.Sectors.Add(new SectorPlanDto()  //mehh
+                //{
+                //    Sector = new SectorDto()
+                //    {
+                //        SectorName = worker.Sector,
+                //        WorkName = worker.WorkName,
+                //    },
+                //    Workers = worker
 
-                    case "ES":
-                        {
-                            fullPlan.ES.Add(user);
-                            break;
-                        }
+                //}) ;
 
-                    case "C3":
-                        {
-                            fullPlan.C3.Add(user);
-                            break;
-                        }
 
-                    case "H12":
-                        {
-                            fullPlan.H12.Add(user);
-                            break;
-                        }
-                }
+                //switch (worker.Sector)
+                //{
+                //    case "A1":
+                //        {
+                //            fullPlan.A1.Add(user);
+                //            break;
+                //        }
+
+                //    case "B12":
+                //        {
+                //            fullPlan.B12.Add(user);
+                //            break;
+                //        }
+
+                //    case "EZ":
+                //        {
+                //            fullPlan.EZ.Add(user);
+                //            break;
+                //        }
+
+                //    case "ES":
+                //        {
+                //            fullPlan.ES.Add(user);
+                //            break;
+                //        }
+
+                //    case "C3":
+                //        {
+                //            fullPlan.C3.Add(user);
+                //            break;
+                //        }
+
+                //    case "H12":
+                //        {
+                //            fullPlan.H12.Add(user);
+                //            break;
+                //        }
+                //}
             }
 
             return fullPlan;

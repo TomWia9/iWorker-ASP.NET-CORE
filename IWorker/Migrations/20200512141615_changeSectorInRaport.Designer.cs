@@ -4,14 +4,16 @@ using IWorker.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace IWorker.Migrations
 {
     [DbContext(typeof(IWorkerContext))]
-    partial class IWorkerContextModelSnapshot : ModelSnapshot
+    [Migration("20200512141615_changeSectorInRaport")]
+    partial class changeSectorInRaport
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -92,6 +94,11 @@ namespace IWorker.Migrations
 
                     b.Property<double>("Amount")
                         .HasColumnType("float");
+
+                    b.Property<string>("Chests")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(10)")
+                        .HasMaxLength(10);
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2")

@@ -34,13 +34,12 @@ namespace IWorker.Services
             {
                 UserID = raport.UserID,
                 Name = raport.Name,
-               Surname = raport.Surname,
-               WorkName = raport.WorkName,
-               Sector = raport.Sector,
+               Surname = raport.Surname,    
+               Sector = raport.Sector.SectorName,
+               WorkName = raport.Sector.WorkName,
                Amount = raport.Amount,
                Hours = raport.Hours,
                Date = DateTime.Parse(raport.Date),
-               Chests = raport.Chests,
 
             };
 
@@ -82,12 +81,10 @@ namespace IWorker.Services
                 UserID = raport.UserID,
                 Name = raport.Name,
                 Surname = raport.Surname,
-                WorkName = raport.WorkName,
-                Sector = raport.Sector,
+                Sector = new SectorDto { SectorName = raport.Sector, WorkName = raport.WorkName },
                 Amount = raport.Amount,
                 Hours = raport.Hours,
                 Date = raport.Date.ToShortDateString(),
-                Chests = raport.Chests
             };
 
         }

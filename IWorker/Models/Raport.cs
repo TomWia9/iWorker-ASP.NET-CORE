@@ -19,13 +19,9 @@ namespace IWorker.Models
         [MaxLength(50)]
         public string Surname { get; set; }
         [Required]
-        [MaxLength(50)]
-        public string WorkName { get; set; }
-        [Required]
-        [MaxLength(10)]
         public string Sector { get; set; }
         [Required]
-        [MaxLength(10)]
+        public string WorkName { get; set; }
         public double Amount { get; set; }
         [Required]
         [MaxLength(2)]
@@ -34,8 +30,6 @@ namespace IWorker.Models
         [MaxLength(200)]
         [DisplayFormat(DataFormatString = "{d/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime Date { get; set; }
-        [Required]
-        [MaxLength(10)]
-        public string Chests { get; set; }
+    
     }
 }

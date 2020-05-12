@@ -25,7 +25,7 @@ namespace IWorker.Services
 
             foreach (var worker in _context.Raports.Where(x => x.Date.Date == DateTime.Parse(date).Date).OrderByDescending(x => x.Amount / x.Hours))
             {
-                if(Math.Round(worker.Amount / worker.Hours, 2) < currentRatio)
+                if (Math.Round(worker.Amount / worker.Hours, 2) < currentRatio)
                 {
                     position++;
                 }
@@ -76,8 +76,8 @@ namespace IWorker.Services
                 {
                     date = DateTime.Now.AddDays(-i).Date.ToShortDateString();
 
-                    if(GetRanking(date).Find(x => x.UserID == userID) != null)
-                         data.Add(GetRanking(date).Find(x => x.UserID == userID).Position);
+                    if (GetRanking(date).Find(x => x.UserID == userID) != null)
+                        data.Add(GetRanking(date).Find(x => x.UserID == userID).Position);
 
                 }
 
@@ -86,9 +86,10 @@ namespace IWorker.Services
 
             if (chartID == 2) //amount of collected fruits
             {
-                List<string> works = new List<string> { "Maliny", "Truskawki", "Borówki", "Jerzyny" };
+                //List<string> works = new List<string> { "Maliny", "Truskawki", "Borówki", "Jerzyny" }; //tu trzba bedzei wyjac z _context.Sectors nazwy prac bez powtorzen
+                List<string> works = _context.Sectors.Select(x => x.WorkName).Distinct().ToList();
 
-                for (int i = 0; i < 4; i++)
+                for (int i = 0; i < works.Count; i++)
                 {
                     data.Add(
                     _context.Raports
@@ -127,11 +128,7 @@ namespace IWorker.Services
 
             if (chartID == 2)
             {
-
-                labels.Add("Maliny");
-                labels.Add("Truskawki");
-                labels.Add("Borówki");
-                labels.Add("Jerzyny");
+                labels = _context.Sectors.Select(x => x.WorkName).Distinct().ToList();
             }
 
             return labels;
@@ -221,25 +218,29 @@ namespace IWorker.Services
 
         public List<string> GetTotalChartLabels()
         {
-            return new List<string>
-            {
-                "Maliny",
-                "Truskawki",
-                "Borówki",
-                "Jerzyny"
-            };
+            return _context.Sectors.Select(x => x.WorkName).Distinct().ToList();
         }
 
         public List<double> GetTotalChartData(int peroid)
         {
-            return new List<double>
-            {
-                _context.Raports.Where(x => x.WorkName == "Maliny" && x.Date.Date >= DateTime.Now.AddDays(-peroid).Date && x.Date.Date < DateTime.Now.Date).Sum(x => x.Amount),
-                _context.Raports.Where(x => x.WorkName == "Truskawki" && x.Date.Date >= DateTime.Now.AddDays(-peroid).Date && x.Date.Date < DateTime.Now.Date).Sum(x => x.Amount),
-                _context.Raports.Where(x => x.WorkName == "Borówki" && x.Date.Date >= DateTime.Now.AddDays(-peroid).Date && x.Date.Date < DateTime.Now.Date).Sum(x => x.Amount),
-                _context.Raports.Where(x => x.WorkName == "Jerzyny" && x.Date.Date >= DateTime.Now.AddDays(-peroid).Date && x.Date.Date < DateTime.Now.Date).Sum(x => x.Amount),
-            };
-        }
+            List<double> data = new List<double>();
+            List<string> works = _context.Sectors.Select(x => x.WorkName).Distinct().ToList();
 
+            for (int i = 0; i < works.Count; i++)
+            {
+                data.Add(
+                _context.Raports
+               .Where(x => x.Date.Date >= DateTime.Now.AddDays(-peroid).Date && x.Date.Date < DateTime.Now.Date && x.WorkName == works.ElementAt(i))
+               .OrderBy(x => x.Date)
+               .Select(x => x.Amount)
+               .Sum()
+                );
+
+            }
+
+            return data;
+
+
+        }
     }
 }
