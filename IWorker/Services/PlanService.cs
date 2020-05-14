@@ -81,12 +81,14 @@ namespace IWorker.Services
           
         }
 
-        public PlanDetailsDto GetFullPlan(string date) //doesnt work right now
+        public PlanDetailsDto GetFullPlan(string date) 
         {
 
             PlanDetailsDto fullPlan = new PlanDetailsDto();
-            
-            var plan = _context.Plans.Where(x => x.Date.Date == DateTime.Parse(date).Date).ToList();
+            List<SectorPlanDto> sectorPlans = new List<SectorPlanDto>();
+            List<SectorDto> sectors = new List<SectorDto>();
+
+            var plan = _context.Plans.Where(x => x.Date.Date == DateTime.Parse(date).Date).ToList(); //here is list of users plan: id, userID, date, workName, sectorName, hours
 
             if (!plan.Any())
             {
@@ -98,68 +100,64 @@ namespace IWorker.Services
 
             foreach (var worker in plan)
             {
+                //here I create worker from data from list "plan"
                 UsersListDto user = new UsersListDto();
+                SectorDto sector = new SectorDto();
                 user.UserID = worker.UserID;
                 var nameAndSurname = _context.Users.Where(x => x.UserId == worker.UserID).FirstOrDefault();
                 user.Name = nameAndSurname.Name;
                 user.Surname = nameAndSurname.Surname;
+                sector.ID = 0;
+                sector.SectorName = worker.Sector;
+                sector.WorkName = worker.WorkName;
 
+                //if ther's no sectors or sector that worker is assigned hadn't created yet,
+                //then create another sector in "sectors" list and then add it to "sectorPlans" list together with worker
+                bool contains = false;
+                foreach (SectorDto sec in sectors) 
+                {
+                    if(sec.SectorName == sector.SectorName)
+                    {
+                        contains = true;
+                    }
+                }
 
+                if (!contains) //!sectors.Contains(sector) doesnt work, i dont know why
+                {
+                    sectors.Add(sector);
+                    sectorPlans.Add(new SectorPlanDto()
+                    {
+                        Sector = sector,
+                        Workers = new List<UsersListDto>()
+                        {
+                           user
+                        }
+                    });
+                }
 
-                //fullPlan.Sectors.Add(new SectorPlanDto()  //mehh
-                //{
-                //    Sector = new SectorDto()
-                //    {
-                //        SectorName = worker.Sector,
-                //        WorkName = worker.WorkName,
-                //    },
-                //    Workers = worker
+                //if sector that worker is assigned for is created, then find index of sector that worker is assigned for on the "sectors" list
+                //and add worker to "workers" list in "sectorPlans" list
+                else
+                {
+                    int i = 0;
+                    int index = 0;
+                    foreach (SectorDto sec in sectors) //may be simplified but findIndex does not work, i don't know why
+                    {
 
-                //}) ;
+                        if (sec == sector)
+                        {
+                            index = i;
+                        }
 
+                        i++;
+                    }
 
-                //switch (worker.Sector)
-                //{
-                //    case "A1":
-                //        {
-                //            fullPlan.A1.Add(user);
-                //            break;
-                //        }
-
-                //    case "B12":
-                //        {
-                //            fullPlan.B12.Add(user);
-                //            break;
-                //        }
-
-                //    case "EZ":
-                //        {
-                //            fullPlan.EZ.Add(user);
-                //            break;
-                //        }
-
-                //    case "ES":
-                //        {
-                //            fullPlan.ES.Add(user);
-                //            break;
-                //        }
-
-                //    case "C3":
-                //        {
-                //            fullPlan.C3.Add(user);
-                //            break;
-                //        }
-
-                //    case "H12":
-                //        {
-                //            fullPlan.H12.Add(user);
-                //            break;
-                //        }
-                //}
+                    sectorPlans.ElementAt(index).Workers.Add(user);
+                }
             }
 
+            fullPlan.Sectors = sectorPlans;
             return fullPlan;
-
         }
 
         public List<PlanDateDto> GetListOfPlanDates()
