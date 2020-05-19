@@ -70,7 +70,7 @@ namespace IWorker.Services
                 {
                     MessageID = item.Id,
                     Date = item.Date.ToString(),
-                    Worker = new UsersListDto
+                    Worker = new ShortUserDto
                     {
                         UserID = user.UserId,
                         Name = user.Name,

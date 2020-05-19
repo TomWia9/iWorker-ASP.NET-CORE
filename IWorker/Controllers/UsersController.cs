@@ -15,20 +15,25 @@ namespace IWorker.Controllers
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    public class WorkersController : ControllerBase
+    public class UsersController : ControllerBase
     {
         private readonly IWorkerContext _context;
         private readonly WorkersService userService;
 
-
-        public WorkersController(IWorkerContext context, IConfiguration configuration)
+        public UsersController(IWorkerContext context, IConfiguration configuration)
         {
             _context = context;
             userService = new WorkersService(_context, configuration);
         }
 
+        [HttpPost("register")]
+        public bool Register(RegisterDto register)
+        {
+            return userService.Register(register);
+        }
+
         [HttpGet("getWorkersList")]
-        public IEnumerable<UsersListDto> GetWorkersList()
+        public IEnumerable<ShortUserDto> GetWorkersList()
         {
             return userService.GetWorkersLists();
         }
@@ -46,7 +51,7 @@ namespace IWorker.Controllers
         }
 
         [HttpPost("editWorker/{userID}")]
-        public bool EditWorker(int userID, UsersListDto newData)
+        public bool EditWorker(int userID, ShortUserDto newData)
         {
             return userService.EditWorker(userID, newData);
         }

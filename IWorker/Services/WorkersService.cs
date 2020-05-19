@@ -91,9 +91,9 @@ namespace IWorker.Services
             return tokenHandler.WriteToken(token);
         }
 
-        public IEnumerable<UsersListDto> GetWorkersLists()
+        public IEnumerable<ShortUserDto> GetWorkersLists()
         {
-            return _context.Users.Where(x => x.UserId != 0).OrderBy(x => x.UserId).ToList().Select(x => new UsersListDto
+            return _context.Users.Where(x => x.UserId != 0).OrderBy(x => x.UserId).ToList().Select(x => new ShortUserDto
             {
                 UserID = x.UserId, 
                 Name = x.Name,
@@ -120,7 +120,7 @@ namespace IWorker.Services
            
         }
 
-        public bool EditWorker(int userID, UsersListDto worker)
+        public bool EditWorker(int userID, ShortUserDto worker)
         {
             if (_context.Users.Any(x => (x.UserId == worker.UserID) && x.UserId != userID)) //jezeli id jest juz zajete ale moze byc to co bylo
             {

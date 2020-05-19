@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace IWorker.Dto
 {
-    public class RaportListDto
+    public class ShortReportDto
     {
-        public long ID { get; set; } //raports id not user
+        public long ID { get; set; } //reports id not user
         public string Date { get; set; }
         public string WorkName { get; set; }
     }

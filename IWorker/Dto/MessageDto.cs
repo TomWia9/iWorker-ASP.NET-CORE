@@ -8,7 +8,7 @@ namespace IWorker.Dto
     public class MessageDto
     {
         public long MessageID { get; set; }
-        public UsersListDto Worker { get; set; }
+        public ShortUserDto Worker { get; set; }
         public string Date { get; set; }
     }
 }

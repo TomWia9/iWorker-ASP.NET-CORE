@@ -16,7 +16,7 @@ namespace IWorker.Services
             _context = context;
         }
 
-        public WorkerPlanDetailsDto Get(int userID, string date)
+        public UserPlanDetailsDto Get(int userID, string date)
         {
 
             var plan = _context.Plans.Where(x => x.UserID == userID && x.Date.Date == DateTime.Parse(date).Date).FirstOrDefault();
@@ -26,7 +26,7 @@ namespace IWorker.Services
                 return null;
             }
 
-            return new WorkerPlanDetailsDto
+            return new UserPlanDetailsDto
             {
                 UserID = plan.UserID,
                 WorkName = plan.WorkName,
@@ -40,7 +40,7 @@ namespace IWorker.Services
         {
             if (sector.Workers.Any())
             {
-                foreach (UsersListDto worker in sector.Workers)
+                foreach (ShortUserDto worker in sector.Workers)
                 {
                     var newPlan = new Plan
                     {
@@ -101,7 +101,7 @@ namespace IWorker.Services
             foreach (var worker in plan)
             {
                 //here I create worker from data from list "plan"
-                UsersListDto user = new UsersListDto();
+                ShortUserDto user = new ShortUserDto();
                 SectorDto sector = new SectorDto();
                 user.UserID = worker.UserID;
                 var nameAndSurname = _context.Users.Where(x => x.UserId == worker.UserID).FirstOrDefault();
@@ -128,7 +128,7 @@ namespace IWorker.Services
                     sectorPlans.Add(new SectorPlanDto()
                     {
                         Sector = sector,
-                        Workers = new List<UsersListDto>()
+                        Workers = new List<ShortUserDto>()
                         {
                            user
                         }

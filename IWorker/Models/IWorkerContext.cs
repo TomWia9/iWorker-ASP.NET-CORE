@@ -15,7 +15,7 @@ namespace IWorker.Models
         }
 
         public DbSet<User> Users { get; set; }
-        public DbSet<Raport> Raports { get; set; }
+        public DbSet<Report> Reports { get; set; }
         public DbSet<Plan> Plans { get; set; }
         public DbSet<Message> Messages { get; set; }
         public DbSet<Sector> Sectors { get; set; }

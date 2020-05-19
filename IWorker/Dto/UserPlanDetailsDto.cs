@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace IWorker.Dto
 {
-    public class WorkerPlanDetailsDto
+    public class UserPlanDetailsDto
     {
         public int UserID { get; set; }
         public string WorkName { get; set; }

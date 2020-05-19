@@ -16,7 +16,7 @@ namespace IWorker.Controllers
     public class LoginController : ControllerBase
     {
         private readonly IWorkerContext _context;
-        private WorkersService userService;
+        private readonly WorkersService userService;
 
         public LoginController(IWorkerContext context, IConfiguration configuration)
         {

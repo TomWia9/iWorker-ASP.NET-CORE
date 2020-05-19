@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace IWorker.Models
 {
-    public class Raport
+    public class Report
     {
         public long Id { get; set; }
         [Required]

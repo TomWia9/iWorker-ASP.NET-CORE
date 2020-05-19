@@ -8,11 +8,11 @@ namespace IWorker.Dto
     public class SectorPlanDto
     {
         public SectorDto Sector;
-        public List<UsersListDto> Workers;
+        public List<ShortUserDto> Workers;
 
         public SectorPlanDto()
         {
-            Workers = new List<UsersListDto>();
+            Workers = new List<ShortUserDto>();
         }
     }
 }

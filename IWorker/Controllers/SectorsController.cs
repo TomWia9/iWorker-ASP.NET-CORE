@@ -16,7 +16,7 @@ namespace IWorker.Controllers
     [ApiController]
     public class SectorsController : ControllerBase
     {
-        private SectorsService sectorsService;
+        private readonly SectorsService sectorsService;
         private readonly IWorkerContext _context;
 
         public SectorsController(IWorkerContext context)

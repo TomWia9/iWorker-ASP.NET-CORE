@@ -23,7 +23,7 @@ namespace IWorker.Services
             int position = 1;
             double currentRatio = 0;
 
-            foreach (var worker in _context.Raports.Where(x => x.Date.Date == DateTime.Parse(date).Date).OrderByDescending(x => x.Amount / x.Hours))
+            foreach (var worker in _context.Reports.Where(x => x.Date.Date == DateTime.Parse(date).Date).OrderByDescending(x => x.Amount / x.Hours))
             {
                 if (Math.Round(worker.Amount / worker.Hours, 2) < currentRatio)
                 {
@@ -92,8 +92,8 @@ namespace IWorker.Services
                 for (int i = 0; i < works.Count; i++)
                 {
                     data.Add(
-                    _context.Raports
-                   .Where(x => x.UserID == userID && x.Date.Date >= DateTime.Now.AddDays(-peroid).Date && x.Date.Date < DateTime.Now.Date && x.WorkName == works.ElementAt(i))
+                    _context.Reports
+                   .Where(x => x.UserID == userID && x.Date.Date >= DateTime.Now.AddDays(-peroid).Date && x.WorkName == works.ElementAt(i))
                    .OrderBy(x => x.Date)
                    .Select(x => x.Amount)
                    .Sum()
@@ -103,8 +103,8 @@ namespace IWorker.Services
 
             if (chartID == 3) //hours
             {
-                data = _context.Raports
-               .Where(x => x.UserID == userID && x.Date.Date >= DateTime.Now.AddDays(-peroid).Date && x.Date.Date < DateTime.Now.Date)
+                data = _context.Reports
+               .Where(x => x.UserID == userID && x.Date.Date >= DateTime.Now.AddDays(-peroid).Date)
                .OrderBy(x => x.Date)
                .Select(x => x.Hours)
                .ToList();
@@ -118,8 +118,8 @@ namespace IWorker.Services
 
             if (chartID == 1 || chartID == 3)
             {
-                labels = _context.Raports
-                .Where(x => x.UserID == userID && x.Date.Date >= DateTime.Now.AddDays(-peroid).Date && x.Date.Date < DateTime.Now.Date)
+                labels = _context.Reports
+                .Where(x => x.UserID == userID && x.Date.Date >= DateTime.Now.AddDays(-peroid).Date)
                 .OrderBy(x => x.Date)
                 .Select(x => x.Date.ToShortDateString())
                 .ToList();
@@ -136,7 +136,7 @@ namespace IWorker.Services
 
         public MainStatisticsDto GetMainStatistics(int userID, string date)
         {
-            var stats = _context.Raports.Where(x => x.UserID == userID && x.Date.Date == DateTime.Parse(date).Date).SingleOrDefault();
+            var stats = _context.Reports.Where(x => x.UserID == userID && x.Date.Date == DateTime.Parse(date).Date).SingleOrDefault();
 
             if (stats == null)
                 return null;
@@ -151,8 +151,8 @@ namespace IWorker.Services
 
         public DataStatisticsDto GetDataStatistics(int userID, int statsID)
         {
-            if (!_context.Raports.Where(x => x.UserID == userID).Any() || !_context.Raports.Where(x => x.UserID == userID && x.Date.Date >= DateTime.Now.AddDays(-7).Date && x.Date.Date < DateTime.Now.Date).Any())
-                return null; //return null when ther's no raports or no raports in previous week
+            if (!_context.Reports.Where(x => x.UserID == userID).Any() || !_context.Reports.Where(x => x.UserID == userID && x.Date.Date >= DateTime.Now.AddDays(-7).Date && x.Date.Date < DateTime.Now.Date).Any())
+                return null; //return null when ther's no reports or no reports in previous week
 
             switch (statsID)
             {
@@ -189,24 +189,24 @@ namespace IWorker.Services
 
                     return new DataStatisticsDto
                     {
-                        Max = _context.Raports.Where(x => x.UserID == userID).Max(x => x.Amount),
-                        Min = _context.Raports.Where(x => x.UserID == userID).Min(x => x.Amount),
-                        Total = _context.Raports.Where(x => x.UserID == userID).Sum(x => x.Amount),
-                        Avg = Math.Round(_context.Raports.Where(x => x.UserID == userID).Average(x => x.Amount), 2),
-                        AvgWeek = Math.Round(_context.Raports.Where(x => x.UserID == userID && x.Date.Date >= DateTime.Now.AddDays(-7).Date && x.Date.Date < DateTime.Now.Date).Average(x => x.Amount), 2),
-                        AvgMonth = Math.Round(_context.Raports.Where(x => x.UserID == userID && x.Date.Date >= DateTime.Now.AddDays(-30).Date && x.Date.Date < DateTime.Now.Date).Average(x => x.Amount), 2)
+                        Max = _context.Reports.Where(x => x.UserID == userID).Max(x => x.Amount),
+                        Min = _context.Reports.Where(x => x.UserID == userID).Min(x => x.Amount),
+                        Total = _context.Reports.Where(x => x.UserID == userID).Sum(x => x.Amount),
+                        Avg = Math.Round(_context.Reports.Where(x => x.UserID == userID).Average(x => x.Amount), 2),
+                        AvgWeek = Math.Round(_context.Reports.Where(x => x.UserID == userID && x.Date.Date >= DateTime.Now.AddDays(-7).Date && x.Date.Date < DateTime.Now.Date).Average(x => x.Amount), 2),
+                        AvgMonth = Math.Round(_context.Reports.Where(x => x.UserID == userID && x.Date.Date >= DateTime.Now.AddDays(-30).Date && x.Date.Date < DateTime.Now.Date).Average(x => x.Amount), 2)
                     };
 
                 case 3: //hours
 
                     return new DataStatisticsDto
                     {
-                        Max = _context.Raports.Where(x => x.UserID == userID).Max(x => x.Hours),
-                        Min = _context.Raports.Where(x => x.UserID == userID).Min(x => x.Hours),
-                        Total = _context.Raports.Where(x => x.UserID == userID).Sum(x => x.Hours),
-                        Avg = Math.Round(_context.Raports.Where(x => x.UserID == userID).Average(x => x.Hours), 2),
-                        AvgWeek = Math.Round(_context.Raports.Where(x => x.UserID == userID && x.Date.Date >= DateTime.Now.AddDays(-7).Date && x.Date.Date < DateTime.Now.Date).Average(x => x.Hours), 2),
-                        AvgMonth = Math.Round(_context.Raports.Where(x => x.UserID == userID && x.Date.Date >= DateTime.Now.AddDays(-30).Date && x.Date.Date < DateTime.Now.Date).Average(x => x.Hours), 2)
+                        Max = _context.Reports.Where(x => x.UserID == userID).Max(x => x.Hours),
+                        Min = _context.Reports.Where(x => x.UserID == userID).Min(x => x.Hours),
+                        Total = _context.Reports.Where(x => x.UserID == userID).Sum(x => x.Hours),
+                        Avg = Math.Round(_context.Reports.Where(x => x.UserID == userID).Average(x => x.Hours), 2),
+                        AvgWeek = Math.Round(_context.Reports.Where(x => x.UserID == userID && x.Date.Date >= DateTime.Now.AddDays(-7).Date && x.Date.Date < DateTime.Now.Date).Average(x => x.Hours), 2),
+                        AvgMonth = Math.Round(_context.Reports.Where(x => x.UserID == userID && x.Date.Date >= DateTime.Now.AddDays(-30).Date && x.Date.Date < DateTime.Now.Date).Average(x => x.Hours), 2)
                     };
 
 
@@ -229,8 +229,8 @@ namespace IWorker.Services
             for (int i = 0; i < works.Count; i++)
             {
                 data.Add(
-                _context.Raports
-               .Where(x => x.Date.Date >= DateTime.Now.AddDays(-peroid).Date && x.Date.Date < DateTime.Now.Date && x.WorkName == works.ElementAt(i))
+                _context.Reports
+               .Where(x => x.Date.Date >= DateTime.Now.AddDays(-peroid).Date && x.WorkName == works.ElementAt(i))
                .OrderBy(x => x.Date)
                .Select(x => x.Amount)
                .Sum()
