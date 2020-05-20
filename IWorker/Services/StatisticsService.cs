@@ -67,12 +67,11 @@ namespace IWorker.Services
         {
             List<double> data = new List<double>();
 
-
             if (chartID == 1) //ranking
             {
                 string date;
 
-                for (int i = 1; i <= peroid; i++)
+                for (int i = 0; i <= peroid; i++)
                 {
                     date = DateTime.Now.AddDays(-i).Date.ToShortDateString();
 
@@ -151,27 +150,20 @@ namespace IWorker.Services
 
         public DataStatisticsDto GetDataStatistics(int userID, int statsID)
         {
-            if (!_context.Reports.Where(x => x.UserID == userID).Any() || !_context.Reports.Where(x => x.UserID == userID && x.Date.Date >= DateTime.Now.AddDays(-7).Date && x.Date.Date < DateTime.Now.Date).Any())
+            if (!_context.Reports.Where(x => x.UserID == userID).Any())
                 return null; //return null when ther's no reports or no reports in previous week
 
             switch (statsID)
             {
                 case 1: //ranking
-                    string date;
-                    int rankingPosition = 1;
-                    int i = 0;
                     List<int> positions = new List<int>();
 
-                    while (rankingPosition != 0)
+                    foreach (var reportDate in _context.Reports.Where(x => x.UserID == userID).Select(x => x.Date).ToList())
                     {
-                        i++;
-                        date = DateTime.Now.AddDays(-i).Date.ToShortDateString();
-                        rankingPosition = GetRanking(date).ToList().FindIndex(x => x.UserID == userID) + 1;
-                        if (rankingPosition != 0)
-                            positions.Add(rankingPosition);
+                        var ranking = GetRanking(reportDate.ToShortDateString()).ToList();
+                        var rankingIndex = ranking.FindIndex(x => x.UserID == userID);
+                        positions.Add(ranking.ElementAt(rankingIndex).Position);
                     }
-
-                    positions.Reverse();
 
                     if (!positions.Any())
                         return null;
