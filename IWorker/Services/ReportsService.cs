@@ -49,22 +49,23 @@ namespace IWorker.Services
             return newReport.Id;
         }
 
-        public IEnumerable<ShortReportDto> GetReportsList(int userID)
+        public IEnumerable<ReportDto> GetReportsList(int userID, int peroid)
         {
-            return _context.Reports.Where(x => x.UserID == userID).OrderByDescending(x => x.Date.Date).ToList().Select(x => new ShortReportDto
+            return _context.Reports.Where(x => x.UserID == userID && x.Date.Date >= DateTime.Now.AddDays(-peroid).Date && x.Date.Date < DateTime.Now.Date).OrderByDescending(x => x.Date.Date).ToList().Select(x => new ReportDto
             {
-                ID = x.Id, //id reportu, nie usera
+                ID = x.Id, //report id, not user ID
+                UserID = x.UserID,
                 WorkName = x.WorkName,
                 Date = x.Date.ToShortDateString(),
 
-            }) ;
+            });
         }
 
-        public IEnumerable<AllReportsDto> GetAllReportsList(int peroid)
+        public IEnumerable<ReportDto> GetAllWorkersReportsList(int peroid)
         {
-            return _context.Reports.Where(x => x.Date.Date >= DateTime.Now.AddDays(-peroid).Date && x.Date.Date < DateTime.Now.Date).OrderByDescending(x => x.Date.Date).ToList().Select(x => new AllReportsDto
+            return _context.Reports.Where(x => x.Date.Date >= DateTime.Now.AddDays(-peroid).Date && x.Date.Date < DateTime.Now.Date).OrderByDescending(x => x.Date.Date).ToList().Select(x => new ReportDto
             {
-                ID = x.Id, //id reportu, nie usera
+                ID = x.Id, //report id, not user ID
                 UserID = x.UserID,
                 WorkName = x.WorkName,
                 Date = x.Date.ToShortDateString(),

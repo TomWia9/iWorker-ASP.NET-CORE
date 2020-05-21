@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace IWorker.Dto
 {
-    public class AllReportsDto
+    public class ReportDto
     {
         public long ID { get; set; } //reports id not user
         public int UserID { get; set; }

@@ -31,22 +31,23 @@ namespace IWorker.Controllers
             return reportService.CreateReport(report);
         }
 
-        [HttpGet("{userID}")]
-        public IEnumerable<ShortReportDto> GetReportsList(int userID)
-        {
-            return reportService.GetReportsList(userID);
-        }
-
         [HttpGet("{userID}/{id}")]
         public ReportItemDto GetReport(int userID, long id)
         {
             return reportService.GetReport(userID, id);
         }
 
-        [HttpGet("getAllReportsList/{peroid}")]
-        public IEnumerable<AllReportsDto> GetAllReportsList(int peroid)
+        [HttpGet("getReportsList/{userID}/{peroid}")]
+        public IEnumerable<ReportDto> GetReportsList(int userID, int peroid)
         {
-            return reportService.GetAllReportsList(peroid);
+            return reportService.GetReportsList(userID, peroid);
+        }
+
+
+        [HttpGet("getAllWorkersReportsList/{peroid}")]
+        public IEnumerable<ReportDto> GetAllWorkersReportsList(int peroid)
+        {
+            return reportService.GetAllWorkersReportsList(peroid);
         }
     }
 }
