@@ -18,7 +18,7 @@ This API uses also basic authentication provided by **JwtBearer**.
 ## Installation
 Make sure you have the **.NET Core 3.1 SDK** installed on your machine. Then do:  
 >`git clone https://github.com/TomWia9/iWorker-ASP.NET-CORE.git`  
-`cd little-aspnetcore-todo`  
+`cd iWorker-ASP.NET-CORE\IWorker\`  
 `dotnet run`
 
 ## Configuration
