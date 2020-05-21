@@ -31,10 +31,10 @@ namespace IWorker.Controllers
             return reportService.CreateReport(report);
         }
 
-        [HttpGet("{userID}/{id}")]
-        public ReportItemDto GetReport(int userID, long id)
+        [HttpGet("{id}")]
+        public ReportItemDto GetReport(long id)
         {
-            return reportService.GetReport(userID, id);
+            return reportService.GetReport(id);
         }
 
         [HttpGet("getReportsList/{userID}/{peroid}")]

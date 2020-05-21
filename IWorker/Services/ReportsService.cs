@@ -73,9 +73,9 @@ namespace IWorker.Services
             });
         }
 
-        public ReportItemDto GetReport(int userID, long id)
+        public ReportItemDto GetReport(long id)
         {
-            var report = _context.Reports.Where(x => x.UserID == userID && x.Id == id).SingleOrDefault();
+            var report = _context.Reports.Where(x => x.Id == id).SingleOrDefault();
 
             return new ReportItemDto
             {
