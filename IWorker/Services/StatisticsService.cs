@@ -221,7 +221,7 @@ namespace IWorker.Services
             for (int i = 0; i < works.Count; i++)
             {
                 data.Add(
-                _context.Reports
+               _context.Reports
                .Where(x => x.Date.Date >= DateTime.Now.AddDays(-peroid).Date && x.WorkName == works.ElementAt(i))
                .OrderBy(x => x.Date)
                .Select(x => x.Amount)

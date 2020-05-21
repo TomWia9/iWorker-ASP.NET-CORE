@@ -34,11 +34,11 @@ namespace IWorker.Services
             {
                 UserID = report.UserID,
                 Name = report.Name,
-               Surname = report.Surname,    
-               Sector = report.Sector.SectorName,
-               WorkName = report.Sector.WorkName,
-               Amount = report.Amount,
-               Hours = report.Hours,
+                Surname = report.Surname,
+                Sector = report.Sector.SectorName,
+                WorkName = report.Sector.WorkName,
+                Amount = Math.Round(report.Amount, 2),
+               Hours = Math.Round(report.Hours, 2),
                Date = DateTime.Parse(report.Date),
 
             };
